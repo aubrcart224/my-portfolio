@@ -27,7 +27,7 @@ const ParticleBackground = () => {
     const particleCount = 100000;
     
     // Torus parameters
-    const R = 70;    // Main radius
+    const R = 80;    // Main radius
     const r = 20;    // Tube radius
     const positions = new Float32Array(particleCount * 3);
 
