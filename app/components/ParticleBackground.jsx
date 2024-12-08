@@ -24,10 +24,10 @@ const ParticleBackground = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     // Create Particle Geometry
-    const particleCount = 50000;
+    const particleCount = 100000;
     
     // Torus parameters
-    const R = 50;    // Main radius
+    const R = 70;    // Main radius
     const r = 20;    // Tube radius
     const positions = new Float32Array(particleCount * 3);
 
@@ -73,7 +73,7 @@ const ParticleBackground = () => {
       requestAnimationFrame(animate);
       points.rotation.y += 0.0002; 
       points.rotation.z += 0.0010;
-      points.rotation.x += 0.0002;
+      points.rotation.x += 0.00005;
       renderer.render(scene, camera);
     }
     animate();
