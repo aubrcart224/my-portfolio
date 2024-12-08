@@ -4,6 +4,10 @@
 import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+//const controls = new OrbitControls(camera, renderer.domElement);
+
+
 const ThreeScene = () => {
   const canvasRef = useRef(null);
 
@@ -21,7 +25,7 @@ const ThreeScene = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+    const material = new THREE.MeshStandardMaterial({ color: 0x990000 });
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
 
@@ -29,6 +33,12 @@ const ThreeScene = () => {
     light.position.set(1, 1, 1);
     scene.add(light);
 
+    
+    const light2 = new THREE.DirectionalLight(0x990000, 1);
+    light.position.set(1, 4, 4);
+    scene.add(light2);
+    
+    
     camera.position.z = 5;
 
     const animate = () => {
