@@ -2,7 +2,8 @@ import ThreeScene from './components/ThreeScene'
 
 // app/page.jsx
 import React from 'react';
-import ParticleBackground from './components/ParticleBackground';
+//import ParticleBackground from './components/ParticleBackground';
+import ParticleBackground from './components/donut';
 import Image from 'next/image';
 
 export default function Page() {
