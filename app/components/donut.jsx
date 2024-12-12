@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-const ParticleBackground = () => {
+const ParticleBackground = ({ children }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -93,7 +93,12 @@ const ParticleBackground = () => {
     };
   }, []);
 
-  return <canvas ref={canvasRef} style={{ position: 'fixed', top: 0, left: 0, zIndex: -1 }} />;
+  return (
+    <div className="relative min-h-screen w-full">
+      <canvas ref={canvasRef} style={{ position: 'fixed', top: 0, left: 0, zIndex: -1 }} />
+      {children}
+    </div>
+  );
 };
 
 export default ParticleBackground;
