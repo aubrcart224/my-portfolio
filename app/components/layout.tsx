@@ -3,11 +3,13 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
+import { Donut } from "lucide-react"
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   
   return (
+    <Donut>
     <div className="min-h-screen w-full flex flex-col items-center justify-between p-4 text-white relative z-10">
       {/* Main content area */}
       <main className="flex-1 w-full max-w-4xl flex flex-col items-center justify-center">
@@ -62,6 +64,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </nav>
     </div>
+    </Donut>
   )
 }
 

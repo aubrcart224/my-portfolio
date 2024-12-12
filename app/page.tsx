@@ -1,37 +1,16 @@
-import ThreeScene from './components/ThreeScene'
+import { Layout } from "@/app/components/layout"
 
-// app/page.jsx
-import React from 'react';
-//import ParticleBackground from './components/ParticleBackground';
-import ParticleBackground from './components/donut';
-import Image from 'next/image';
-
-export default function Page() {
+export default function HomePage() {
   return (
-    <div style={{ height: '100vh', width: '100vw', overflow: 'hidden', position: 'relative' }}>
-      <ParticleBackground />
-      <div 
-        style={{ 
-          position: 'absolute', 
-          top: '50%', 
-          left: '50%', 
-          transform: 'translate(-50%, -50%)', 
-          textAlign: 'center', 
-          color: '#fff', 
-          maxWidth: '600px'
-        }}
-      >
-        <h1 style={{ fontSize: '4rem', marginBottom: '1rem', letterSpacing: '0.1em' }}>Aubrey Carter</h1>
-        <p style={{ fontSize: '1rem', lineHeight: '1.5em', marginBottom: '2rem' }}>
-          Just doing things.
-        </p>
-        <p style={{ fontSize: '1rem', lineHeight: '1.5em', marginBottom: '2rem' }}>
-          Filler for now.
-        </p>
-        <p style={{ fontSize: '0.875rem', letterSpacing: '0.1em', marginTop: '3rem' }}>
-          Hold the space bar to explore
+    <Layout>
+      <div className="text-center space-y-4 text-gray-400">
+        <h1 className="text-4xl font-bold text-gray-400">Aubrey Carter</h1>
+        <p className="text-xl text-gray-400">Building things</p>
+        <p className="max-w-md mx-auto text-gray-400">
+          Someone trying to make the world a better place with technology
         </p>
       </div>
-    </div>
-  );
+    </Layout>
+  )
 }
+
