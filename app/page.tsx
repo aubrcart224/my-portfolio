@@ -23,7 +23,7 @@ export default function Page() {
       >
         <h1 style={{ fontSize: '4rem', marginBottom: '1rem', letterSpacing: '0.1em' }}>Aubrey Carter</h1>
         <p style={{ fontSize: '1rem', lineHeight: '1.5em', marginBottom: '2rem' }}>
-          Welcome to my Portfolio.
+          Just doing things.
         </p>
         <p style={{ fontSize: '1rem', lineHeight: '1.5em', marginBottom: '2rem' }}>
           Filler for now.
