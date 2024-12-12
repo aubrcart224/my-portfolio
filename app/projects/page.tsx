@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from "react"
-import { Layout } from "@/app/components/layout"
+//import { Layout } from "@/app/layout"
 import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/app/components/ui/dialog"
 
@@ -24,7 +24,7 @@ export default function BlogPage() {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null)
 
   return (
-    <Layout>
+    <>
       <h1 className="text-3xl font-bold mb-8">Blog</h1>
       <Card className="w-full max-w-2xl bg-gray-900">
         <CardHeader>
@@ -60,7 +60,7 @@ export default function BlogPage() {
           </div>
         </DialogContent>
       </Dialog>
-    </Layout>
+      </>
   )
 }
 
