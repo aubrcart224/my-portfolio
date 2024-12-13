@@ -16,7 +16,6 @@ export default function Layout({
   
   return (
     <html>
-    
       <body>
     <ParticleBackground>
     <div className="min-h-screen w-full flex flex-col items-center justify-between p-4 text-white relative z-10">
