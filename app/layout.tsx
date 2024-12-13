@@ -57,7 +57,7 @@ export default function Layout({
         </div>
         
         {/* Social Links */}
-        <div className="flex items-center gap-4 text-sm text-gray-400">
+        <div className="flex items-center gap-4 text-sm text-white">
           <Link href="https://github.com" className="hover:text-white">
             github
           </Link>
