@@ -9,8 +9,8 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 const projects = [
   { 
     id: 1, 
-    title: "Project 1", 
-    description: "Description text, Description text, Description text Description text, Description text, Description text, Description text, Description text, Description text, Description text, Description text, Description text Description text Description text Description text Description text Description text Description text",
+    title: "Project", 
+    description: "Description text, Description text, Description text Description text, Description text, Description text, Description text, Description text, Description text, Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text",
   },
   { 
     id: 2, 
@@ -39,39 +39,38 @@ export default function ProjectPage({ params }: { params: { id: string } }) {
       <div className="w-full max-w-2xl mx-auto">
         <h1 className="text-2xl font-medium text-center mb-8">Aubrey Carter</h1>
         <Card className="bg-white p-6 relative">
-          <Button
-            variant="ghost"
-            className="absolute right-4 top-4 text-gray-900"
-            onClick={() => router.push('/')}
-          >
-            Back
-          </Button>
-          
-          <div className="flex items-center justify-between mb-6">
-            <Button
-              variant="ghost"
-              disabled={!prevProject}
-              onClick={() => router.push(`/projects/${projectId - 1}`)}
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            
-            <div className="w-full max-w-sm mx-4">
-              <div className="w-full h-48 bg-gradient-to-b from-gray-900 via-purple-600 to-purple-400 rounded-lg" />
+          <div className="flex gap-6">
+            <div className="w-1/2 relative">
+              <Button
+                variant="link"
+                className="absolute left-0 top-0 text-gray-900 hover:no-underline"
+                onClick={() => router.push('/')}
+              >
+                Back
+              </Button>
+              <div className="mt-8">
+                <div className="w-full aspect-square bg-gradient-to-b from-gray-900 via-purple-600 to-purple-400 rounded-lg relative">
+                  <button
+                    className="absolute left-2 top-1/2 -translate-y-1/2 text-white hover:text-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={!prevProject}
+                    onClick={() => prevProject && router.push(`/projects/${projectId - 1}`)}
+                  >
+                    <ChevronLeft className="h-6 w-6" />
+                  </button>
+                  <button
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-white hover:text-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={!nextProject}
+                    onClick={() => nextProject && router.push(`/projects/${projectId + 1}`)}
+                  >
+                    <ChevronRight className="h-6 w-6" />
+                  </button>
+                </div>
+              </div>
             </div>
-            
-            <Button
-              variant="ghost"
-              disabled={!nextProject}
-              onClick={() => router.push(`/projects/${projectId + 1}`)}
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
-
-          <div className="space-y-4">
-            <h2 className="text-gray-900 font-medium">{project.title}</h2>
-            <p className="text-gray-600 whitespace-pre-wrap">{project.description}</p>
+            <div className="w-1/2 space-y-4">
+              <h2 className="text-gray-900 font-medium">{project.title}</h2>
+              <p className="text-gray-600 text-sm leading-relaxed">{project.description}</p>
+            </div>
           </div>
         </Card>
       </div>
