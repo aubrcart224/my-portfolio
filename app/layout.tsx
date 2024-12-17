@@ -23,6 +23,8 @@ export default function Layout({
       <main className="flex-1 w-full max-w-4xl flex flex-col items-center justify-center">
         {children}
       </main>
+
+      
       
       {/* Navigation */}
       <nav className="w-full max-w-4xl flex flex-col items-center gap-8 mb-12">
@@ -56,17 +58,18 @@ export default function Layout({
           </Link>
         </div>
         
-        {/* Social Links */}
+        
+        {/* Footer Links */}
         <div className="flex items-center gap-4 text-sm text-white">
-          <Link href="https://github.com" className="hover:text-white">
+          <Link href="https://github.com/aubrcart224?tab=overview&from=2024-12-01&to=2024-12-16" className="hover:text-white">
             github
           </Link>
           <span>•</span>
-          <Link href="https://x.com" className="hover:text-white">
+          <Link href="https://x.com/CottonSwab001" className="hover:text-white">
             x.com
           </Link>
           <span>•</span>
-          <Link href="https://linkedin.com" className="hover:text-white">
+          <Link href="https://www.linkedin.com/in/aubrey-carter/" className="hover:text-white">
             linkedin
           </Link>
         </div>
