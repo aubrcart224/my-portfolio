@@ -1,29 +1,34 @@
+// src/pages/ResumePage.tsx
 
+import React from 'react';
+import { Button } from '@/components/ui/button';
 
 export default function ResumePage() {
   return (
-    <>
-      <h1 className="text-3xl font-bold mb-8">Resume</h1>
-      <div className="prose prose-invert max-w-2xl">
-        <h2>Experience</h2>
-        <ul>
-          <li>Software Engineer at Tech Company A (2020-Present)</li>
-          <li>Junior Developer at Startup B (2018-2020)</li>
-        </ul>
-
-        <h2>Education</h2>
-        <ul>
-          <li>B.S. in Computer Science, University X (2014-2018)</li>
-        </ul>
-
-        <h2>Skills</h2>
-        <ul>
-          <li>JavaScript, TypeScript, React, Next.js</li>
-          <li>Node.js, Express, MongoDB</li>
-          <li>HTML, CSS, Tailwind CSS</li>
-          <li>Git, GitHub, CI/CD</li>
-        </ul>
+    <div className="container mx-auto px-4 pt-4">
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold">Resume</h1>
+        <a href="/resume.pdf" download>
+          <Button variant="default">
+            Download PDF
+          </Button>
+        </a>
       </div>
-      </>
-  )
+      
+      {/* Embed the PDF using iframe */}
+      <div className="h-[calc(100vh-14rem)]">
+        <iframe
+          src="/Aubrey_Carter_Resume.pdf"
+          title="Resume"
+          width="100%"
+          //height="100%"
+          height="95%"
+          style={{ border: '', borderRadius: '8px' }}
+        >
+          This browser does not support PDFs. Please download the resume to view it:
+          <a href="/resume.pdf">Download Resume</a>
+        </iframe>
+      </div>
+    </div>
+  );
 }

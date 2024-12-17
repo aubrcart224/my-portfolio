@@ -18,21 +18,21 @@ export default function Layout({
     <html>
       <body>
     <ParticleBackground>
-    <div className="min-h-screen w-full flex flex-col items-center justify-between p-4 text-white relative z-10">
+    <div className="min-h-screen w-full flex flex-col items-center justify-between p-2 text-white relative z-10">
       {/* Main content area */}
       <main className="flex-1 w-full max-w-4xl flex flex-col items-center justify-center">
         {children}
       </main>
 
       
-      
+
       {/* Navigation */}
-      <nav className="w-full max-w-4xl flex flex-col items-center gap-8 mb-12">
+      <nav className="w-full max-w-4xl flex flex-col items-center gap-8 mb-6">
         <div className="flex items-center gap-6">
           <Link 
             href="/projects"
             className={cn(
-              "hover:underline underline-offset-4",
+              "underline underline-offset-4",
               pathname === "/projects" && "underline"
             )}
           >
@@ -41,7 +41,7 @@ export default function Layout({
           <Link 
             href="/blog"
             className={cn(
-              "hover:underline underline-offset-4",
+              "underline underline-offset-4",
               pathname === "/blog" && "underline"
             )}
           >
@@ -50,7 +50,8 @@ export default function Layout({
           <Link 
             href="/resume"
             className={cn(
-              "hover:underline underline-offset-4",
+              //"hover:underline underline-offset-4", old line saving for now
+              "underline underline-offset-4",
               pathname === "/resume" && "underline"
             )}
           >
@@ -73,6 +74,7 @@ export default function Layout({
             linkedin
           </Link>
         </div>
+        
       </nav>
     </div>
     </ParticleBackground>
