@@ -40,20 +40,20 @@ export default function BlogPage() {
               <Link 
                 href={`/blog/${post.slug}`}
                 className={cn(
-                  "text-purple-400 hover:text-purple-300 transition-colors",
+                  "text-purple-400 hover:text-purple-400 transition-colors",
                   "font-mono text-sm underline underline-offset-4"
                 )}
               >
                 {post.title}
               </Link>
-              <span className="text-gray-500 font-mono text-sm">
+              <span className="text-white font-mono text-sm">
                 {post.date}
               </span>
             </div>
           ))}
         </div>
       </div>
-      </>
+    </>
   )
 }
 

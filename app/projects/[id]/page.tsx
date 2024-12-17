@@ -43,8 +43,8 @@ export default function ProjectPage({ params }: { params: { id: string } }) {
             <div className="w-1/2 relative">
               <Button
                 variant="link"
-                className="absolute left-0 top-0 text-gray-900 hover:no-underline"
-                onClick={() => router.push('/')}
+                className="absolute left-0 top-0 text-gray-900 hover:no-underline border"
+                onClick={() => router.push('/projects')}
               >
                 Back
               </Button>
