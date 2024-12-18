@@ -14,6 +14,8 @@ interface FlipCardProps {
   onClick: () => void
 }
 
+
+
 export function FlipCard({ 
   title, 
   description, 
