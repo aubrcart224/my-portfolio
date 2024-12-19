@@ -1,3 +1,4 @@
+'use client'
 
 import { ProjectCarousel } from "@/app/components/project-carousel"
 

@@ -1,3 +1,4 @@
+
 import fs from 'fs/promises'
 import path from 'path'
 import { notFound } from 'next/navigation'
@@ -5,6 +6,8 @@ import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
+
+
 
 export async function generateStaticParams() {
   const postsDirectory = path.join(process.cwd(), 'content/blog')
