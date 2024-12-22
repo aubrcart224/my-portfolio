@@ -9,6 +9,9 @@ import rehypeKatex from 'rehype-katex'
 
 
 
+
+
+
 export async function generateStaticParams() {
   const postsDirectory = path.join(process.cwd(), 'content/blog')
   const files = await fs.readdir(postsDirectory)
