@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import Image from 'next/image'
+//import { MarkdownContent } from './markdown-content'
 
 interface FlipCardProps {
   title: string
@@ -12,6 +12,10 @@ interface FlipCardProps {
   active: boolean
   total: number
   onClick: () => void
+  onFlip: () => void
+  isFlipped: boolean
+  markdownContent: string
+  date?: string
 }
 
 export function FlipCard({ 
@@ -21,29 +25,27 @@ export function FlipCard({
   index, 
   active, 
   total, 
-  onClick 
+  onClick,
+  onFlip,
+  isFlipped,
+  markdownContent,
+  date
 }: FlipCardProps) {
-  const [isFlipped, setIsFlipped] = useState(false)
-
-  // Calculate position and transform based on distance from active index
-  const distanceFromCenter = index - Math.floor(total / 2)
-  const xOffset = distanceFromCenter * 110
-  const zOffset = Math.abs(distanceFromCenter) * -100
-  const opacity = Math.max(1 - Math.abs(distanceFromCenter) * 0.2, 0.4)
-  const scale = Math.max(1 - Math.abs(distanceFromCenter) * 0.1, 0.8)
+  const centerIndex = Math.floor(total / 2)
+  const offset = (index - centerIndex) * 80
+  const yOffset = Math.abs(index - centerIndex) * 10
 
   return (
     <motion.div
-      className="absolute w-64 h-96 cursor-pointer preserve-3d"
+      className={`absolute cursor-pointer ${isFlipped ? 'w-[800px] h-[600px] z-50' : 'w-80 h-[500px]'}`}
       style={{
-        perspective: 1000,
-        zIndex: total - Math.abs(distanceFromCenter),
+        zIndex: active ? total : total - Math.abs(index - centerIndex),
       }}
       animate={{
-        x: xOffset,
-        z: zOffset,
-        scale,
-        opacity,
+        x: isFlipped ? 0 : offset,
+        y: isFlipped ? 0 : yOffset,
+        scale: active ? 1 : 0.9,
+        opacity: active ? 1 : 0.8,
       }}
       transition={{
         type: "spring",
@@ -51,21 +53,15 @@ export function FlipCard({
         damping: 30
       }}
       onClick={() => {
-        if (active) {
-          setIsFlipped(!isFlipped)
-        } else {
+        if (!active) {
           onClick()
+        } else {
+          onFlip()
         }
       }}
     >
       <motion.div
-        className="absolute w-full h-full backface-hidden rounded-xl overflow-hidden"
-        style={{
-          background: 'rgba(0, 0, 0, 0.8)',
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
-        }}
+        className="w-full h-full rounded-3xl overflow-hidden border border-white/10"
         animate={{
           rotateY: isFlipped ? 180 : 0,
         }}
@@ -74,52 +70,39 @@ export function FlipCard({
           stiffness: 300,
           damping: 30
         }}
-      >
-        <div className="p-4">
-          <h3 className="text-xl font-medium text-white mb-4">{title}</h3>
-          <div className="w-full aspect-square bg-gray-200 rounded-lg mb-4 overflow-hidden">
-            <Image
-              src="/placeholder.svg?height=400&width=400"
-              alt="Project preview"
-              width={400}
-              height={400}
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div 
-            className="p-4 rounded-lg"
-            style={{
-              background: `linear-gradient(135deg, ${color}88, ${color})`,
-            }}
-          >
-            <p className="text-sm text-white/90 line-clamp-3">
-              {description}
-            </p>
-          </div>
-        </div>
-      </motion.div>
-
-      <motion.div
-        className="absolute w-full h-full backface-hidden rounded-xl overflow-hidden"
         style={{
-          background: 'rgba(0, 0, 0, 0.8)',
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
-        }}
-        animate={{
-          rotateY: isFlipped ? 0 : -180,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 300,
-          damping: 30
+          transformStyle: "preserve-3d",
         }}
       >
-        <div className="p-6">
-          <h3 className="text-xl font-medium text-white mb-4">{title}</h3>
-          <p className="text-white/80">{description}</p>
-        </div>
+        {/* Front of the card */}
+        <motion.div
+          className="absolute w-full h-full bg-zinc-900"
+          style={{
+            backfaceVisibility: "hidden",
+          }}
+        >
+          <div className="p-8 h-full flex flex-col">
+            <h3 className="text-2xl font-medium text-white mb-8">{title}</h3>
+            <div className="w-full aspect-square bg-gray-300 rounded-2xl mb-8 flex items-center justify-center text-gray-600">
+              image
+            </div>
+            <div className="mt-auto text-white/90 text-sm">
+              {description}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Back of the card */}
+        <motion.div
+          className="absolute w-full h-full bg-[#1a1a1a] p-8 overflow-y-auto font-mono"
+          style={{
+            backfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
+          }}
+        >
+          <div className="text-sm text-gray-400 mb-4">{date}</div>
+          
+        </motion.div>
       </motion.div>
     </motion.div>
   )

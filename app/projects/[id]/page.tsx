@@ -10,7 +10,7 @@ const projects = [
   { 
     id: 1, 
     title: "Project", 
-    description: "Description text, Description text, Description text Description text, Description text, Description text, Description text, Description text, Description text, Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text",
+    description: "Description text, Description text, Description text Description text, Description text, Description text, Description text, Description text, Description text, Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text Description text",
   },
   { 
     id: 2, 
@@ -74,7 +74,7 @@ export default function ProjectPage({ params }: { params: { id: string } }) {
           </div>
         </Card>
       </div>
-    </>
+      </>
   )
 }
 
