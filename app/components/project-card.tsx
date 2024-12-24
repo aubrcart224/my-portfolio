@@ -29,7 +29,7 @@ export function ProjectCard({
 
   return (
     <motion.div
-      className="absolute cursor-pointer w-80 h-[500px]"
+      className="absolute rounded-2xl overflow-hidden border border-white/40 cursor-pointer w-80 h-[500px]"
       style={{
         zIndex: active ? 50 : total - Math.abs(index - centerIndex),
       }}
