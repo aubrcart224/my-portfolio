@@ -25,8 +25,8 @@ export function FlipCard({
   index, 
   active, 
   total, 
-  onClick,
-  onFlip,
+  //onClick,
+  //onFlip,
   isFlipped,
   markdownContent,
   date
@@ -54,9 +54,9 @@ export function FlipCard({
       }}
       onClick={() => {
         if (!active) {
-          onClick()
+          //onClick()
         } else {
-          onFlip()
+         //onFlip()
         }
       }}
     >

@@ -2,8 +2,6 @@
 
 import { ProjectCarousel } from "@/app/components/project-carousel"
 
-
-
 export default function ProjectsPage() {
   return (
     <>

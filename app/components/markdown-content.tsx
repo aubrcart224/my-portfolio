@@ -1,9 +1,6 @@
 'use client'
 
 import React from 'react'
-import { MDXRemote } from 'next-mdx-remote/rsc'
-import remarkMath from 'remark-math'
-import rehypeKatex from 'rehype-katex'
 
 interface MarkdownContentProps {
   content: string
@@ -11,15 +8,10 @@ interface MarkdownContentProps {
 
 export function MarkdownContent({ content }: MarkdownContentProps) {
   return (
-    <MDXRemote 
-      source={content}
-      options={{
-        mdxOptions: {
-          remarkPlugins: [remarkMath],
-          rehypePlugins: [rehypeKatex],
-        },
-      }}
-    />
+    <div className="markdown">
+      {/* Render markdown content here */}
+      {content}
+    </div>
   )
 }
 
