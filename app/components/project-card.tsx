@@ -1,23 +1,71 @@
 'use client'
 
-import Link from "next/link"
-import { Card } from "@/app/components/ui/card"
+import { motion } from 'framer-motion'
 
 interface ProjectCardProps {
-  id: number
-  title: string;
-  description: string;
-  //onClick: () => void;
+  title: string
+  description: string
+  color: string
+  index: number
+  active: boolean
+  total: number
+  onClick: () => void
+  onSelect: () => void
 }
 
-export function ProjectCard({ id, title, description }: ProjectCardProps) {
+export function ProjectCard({ 
+  title, 
+  description, 
+  color, 
+  index, 
+  active, 
+  total, 
+  onClick,
+  onSelect
+}: ProjectCardProps) {
+  const centerIndex = Math.floor(total / 2)
+  const offset = (index - centerIndex) * 80
+  const yOffset = Math.abs(index - centerIndex) * 10
+
   return (
-    <Link href={`/projects/${id}`} className="block w-full">
-      <Card className="bg-white hover:bg-gray-50 transition-colors p-4">
-        <h3 className="text-gray-900 font-medium mb-1">{title}</h3>
-        <p className="text-gray-600 text-sm">{description}</p>
-      </Card>
-    </Link>
+    <motion.div
+      className="absolute cursor-pointer w-80 h-[500px]"
+      style={{
+        zIndex: active ? 50 : total - Math.abs(index - centerIndex),
+      }}
+      animate={{
+        x: offset,
+        y: yOffset,
+        scale: active ? 1 : 0.9,
+        opacity: active ? 1 : 0.8,
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 300,
+        damping: 30
+      }}
+      onClick={() => {
+        if (!active) {
+          onClick()
+        } else {
+          onSelect()
+        }
+      }}
+    >
+      <div className="w-full h-full rounded-3xl overflow-hidden border border-white/10">
+        <div className="absolute w-full h-full bg-zinc-900">
+          <div className="p-8 h-full flex flex-col">
+            <h3 className="text-2xl font-medium text-white mb-8">{title}</h3>
+            <div className="w-full aspect-square bg-gray-300 rounded-2xl mb-8 flex items-center justify-center text-gray-600">
+              image
+            </div>
+            <div className="mt-auto text-white/90 text-sm">
+              {description}
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
   )
 }
 

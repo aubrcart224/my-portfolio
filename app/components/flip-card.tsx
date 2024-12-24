@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-//import { MarkdownContent } from './markdown-content'
+import { MarkdownContent } from './markdown-content'
 
 interface FlipCardProps {
   title: string
@@ -101,7 +101,7 @@ export function FlipCard({
           }}
         >
           <div className="text-sm text-gray-400 mb-4">{date}</div>
-          
+          <MarkdownContent content={markdownContent} />
         </motion.div>
       </motion.div>
     </motion.div>

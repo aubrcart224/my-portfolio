@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { FlipCard } from './flip-card'
+import { ProjectCard } from './project-card'
+import { ProjectDialog } from './project-dialog'
 
 interface Project {
   id: number
@@ -88,12 +89,12 @@ called momentum.
 
 export function ProjectCarousel() {
   const [activeIndex, setActiveIndex] = useState(Math.floor(projects.length / 2))
-  const [flippedIndex, setFlippedIndex] = useState<number | null>(null)
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
-      if (flippedIndex !== null) return
+      if (selectedProject) return
       e.preventDefault()
       if (containerRef.current) {
         if (e.deltaY > 0 && activeIndex < projects.length - 1) {
@@ -114,32 +115,39 @@ export function ProjectCarousel() {
         container.removeEventListener('wheel', handleWheel)
       }
     }
-  }, [activeIndex, flippedIndex])
+  }, [activeIndex, selectedProject])
 
   return (
-    <div 
-      className="relative w-full h-[600px] flex items-center justify-center perspective-1000" 
-      ref={containerRef}
-    >
-      <div className="relative w-80 h-[500px]">
-        {projects.map((project, index) => (
-          <FlipCard
-            key={project.id}
-            title={project.title}
-            description={project.description}
-            color={project.color}
-            date={project.date}
-            index={index}
-            active={index === activeIndex}
-            total={projects.length}
-            onClick={() => setActiveIndex(index)}
-            onFlip={() => setFlippedIndex(index === flippedIndex ? null : index)}
-            isFlipped={index === flippedIndex}
-            markdownContent={project.markdownContent}
-          />
-        ))}
+    <>
+      <div 
+        className="relative w-full h-[600px] flex items-center justify-center perspective-1000 isolate" 
+        ref={containerRef}
+      >
+        <div className="relative w-80 h-[500px]">
+          {projects.map((project, index) => (
+            <ProjectCard
+              key={project.id}
+              title={project.title}
+              description={project.description}
+              color={project.color}
+              index={index}
+              active={index === activeIndex}
+              total={projects.length}
+              onClick={() => setActiveIndex(index)}
+              onSelect={() => setSelectedProject(project)}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+
+      <ProjectDialog
+        isOpen={selectedProject !== null}
+        onClose={() => setSelectedProject(null)}
+        title={selectedProject?.title ?? ''}
+        date={selectedProject?.date ?? ''}
+        content={selectedProject?.markdownContent ?? ''}
+      />
+    </>
   )
 }
 
