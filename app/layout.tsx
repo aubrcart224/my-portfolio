@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import ParticleBackground from '@/app/components/donut';
 import './globals.css'
+import { Home } from 'lucide-react'
 
 
 export default function Layout({
@@ -59,6 +60,15 @@ export default function Layout({
           </Link>
         </div>
         
+
+        <Link 
+        href="/" 
+        className="absolute top-4 right-4 p-2 rounded-full bg-zinc-800 hover:bg-zinc-700 transition-colors"
+        aria-label="Go to home page"
+        >
+          <Home className="w-5 h-5 text-white" />
+        </Link>
+
         
         {/* Footer Links */}
         <div className="flex items-center gap-4 text-sm text-white">
