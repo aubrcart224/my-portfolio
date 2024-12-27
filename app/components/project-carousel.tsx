@@ -18,7 +18,7 @@ const projects: Project[] = [
     id: 1,
     title: "motivating adam optimizer",
     date: "sept 16, 2024",
-    description: "Description elikrjgnekljngkjaen lkaejnbgjlkernba akejngkjaegkneangnkeajngkae...",
+    description: "Description ",
     color: "#18181B",
     markdownContent: `
 our first type of optimization, the standard one size fits all solution
@@ -56,7 +56,7 @@ called momentum.
   {
     id: 2,
     title: "Project one",
-    description: "Description elikrjgnekljngkjaen lkaejnbgjlkernba akejngkjaegkneangnkeajngkae...",
+    description: "Description .",
     color: "#18181B",
     markdownContent: `# Project Two\n\nDetailed description here...`,
     date: "Oct 26, 2024"
@@ -64,7 +64,7 @@ called momentum.
   {
     id: 3,
     title: "Project one",
-    description: "Description elikrjgnekljngkjaen lkaejnbgjlkernba akejngkjaegkneangnkeajngkae...",
+    description: "Description ",
     color: "#18181B",
     markdownContent: `# Project Three\n\nDetailed description here...`,
     date: "Nov 15, 2024"
@@ -72,7 +72,7 @@ called momentum.
   {
     id: 4,
     title: "Project one",
-    description: "Description elikrjgnekljngkjaen lkaejnbgjlkernba akejngkjaegkneangnkeajngkae...",
+    description: "Description ",
     color: "#18181B",
     markdownContent: `# Project Four\n\nDetailed description here...`,
     date: "Dec 12, 2024"
@@ -80,7 +80,7 @@ called momentum.
   {
     id: 5,
     title: "Project one",
-    description: "Description elikrjgnekljngkjaen lkaejnbgjlkernba akejngkjaegkneangnkeajngkae...",
+    description: "Description ",
     color: "#18181B",
     markdownContent: `# Project Five\n\nDetailed description here...`,
     date: "Jan 5, 2025"
