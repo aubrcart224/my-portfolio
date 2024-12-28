@@ -15,14 +15,20 @@ export function FadeText({ children }: FadeTextProps) {
     // Initialize letter opacities
     setLetterOpacities(new Array(text.length).fill(1))
 
-    // Randomly adjust letter opacities
-    const opacityInterval = setInterval(() => {
-      setLetterOpacities(prev => 
-        prev.map(() => Math.random() * 0.8 + 0.4) // use this to change how bright it can get 
-      )
-    }, 650) // Adjust timing as needed
+    // Initialize individual intervals for each letter
+    const intervals = text.split('').map((_, index) => 
+      setInterval(() => {
+        setLetterOpacities(prev => {
+          const newOpacities = [...prev]
+          newOpacities[index] = Math.random() * 0.8 + 0.4
+          return newOpacities
+        })
+      }, 650 + index * 100) // Stagger intervals by 100ms per letter
+    )
 
-    return () => clearInterval(opacityInterval)
+    return () => {
+      intervals.forEach(clearInterval) // Clear all intervals on cleanup
+    }
   }, [text])
 
   return (
