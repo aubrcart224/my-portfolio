@@ -16,9 +16,9 @@ interface Project {
 const projects: Project[] = [
   {
     id: 1,
-    title: "motivating adam optimizer",
+    title: "Tetris AI",
     date: "sept 16, 2024",
-    description: "Description ",
+    description: "Tetris that plays itself with the power of ML",
     color: "#18181B",
     markdownContent: `
 our first type of optimization, the standard one size fits all solution
@@ -60,70 +60,96 @@ called momentum.
     color: "#18181B",
     date: "Oct 26, 2024",
     markdownContent: 
-    `
-    # Shared Memory Kernel Driver
+    `Shared Memory Kernel Driver
+This project implements a Windows kernel driver that creates and manages a section of shared memory. This allows kernel-mode processes to share data efficiently with each other or with user-mode processes. The driver demonstrates fundamental operations such as creating a device, mapping shared memory, and handling I/O requests.
 
-    This project implements a Windows kernel driver that creates and manages a section of shared memory. This allows kernel-mode processes to share data efficiently with each other or with user-mode processes. The driver demonstrates fundamental operations such as creating a device, mapping shared memory, and handling I/O requests.
-    
-    \`\`\`
-    THIS IS DEAD CODE
-    Since this driving is getting put to use I cant have it chilling on git unfortunatly,
-    the driver will be finished in a pirvate repo, if you are wanting to see the full code please reach out via email
-     and I will be happy to send it to you if possible. 
-    \`\`\`
-    
-    ## Features
-    
-    - **Device Creation**: Setup a character device to interact with user-mode applications.
-    - **Shared Memory**: Allocate and manage shared memory accessible by both kernel and user-mode.
-    - **Driver Communication**: Use IOCTLs to facilitate user-mode to kernel-mode communication.
-    - **Security Handling**: Template functions to handle security attributes of shared resources.
-    
-    ## Prerequisites
-    
-    To build and run this kernel driver, you will need:
-    - Windows 10 or higher
-    - Windows Driver Kit (WDK)
-    - Visual Studio 2019 or newer
-    
-    ## Getting Started
-    
-    These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
-    
-    ### Installation
-    
-    1. **Not for sale.**
-    
-       \`\`\`bash
-       this will break your computer want the working code, email me. 
-       \`\`\`
+THIS IS DEAD CODE
+Since this driving is getting put to use I cant have it chilling on git unfortunatly,
+the driver will be finished in a pirvate repo, if you are wanting to see the full code please reach out via email
+ and I will be happy to send it to you if possible. 
+Features
+Device Creation: Setup a character device to interact with user-mode applications.
+Shared Memory: Allocate and manage shared memory accessible by both kernel and user-mode.
+Driver Communication: Use IOCTLs to facilitate user-mode to kernel-mode communication.
+Security Handling: Template functions to handle security attributes of shared resources.
+Prerequisites
+To build and run this kernel driver, you will need:
+
+Windows 10 or higher
+Windows Driver Kit (WDK)
+Visual Studio 2019 or newer
+Getting Started
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
     `,
   },
   {
     id: 3,
-    title: "Project one",
+    title: "This portfolio website",
     description: "Description ",
     color: "#18181B",
     date: "Nov 15, 2024",
-    markdownContent: `# Project Three\n\nDetailed description here...`,
+    markdownContent: `A portfolio website using three.js
+Focused on learning and experimenting with three.js but keeping things clean and simple for the time being 
+Using Next.js 
+`,
     
   },
   {
     id: 4,
-    title: "Project one",
-    description: "Description ",
+    title: "Flash-Flow",
+    description: "AI Flashcard SaaS app for med students",
     color: "#18181B",
     date: "Dec 12, 2024",
-    markdownContent: `# Project Four\n\nDetailed description here...`,
+    markdownContent: `
+saas app for med students 
+Med students spend a lot of time building out their flashcards that they then use in anki (popular memorization / study app). 
+Flash flow will generate the flashcards for the students based on either interfacing with the chatbot or via sending it content. This saves students hours and hours of time that could otherwise be spent studying
+Built in Next.js with react. Made use of lots of Shadcn components. 
+Work in progress. `,
     
   },
   {
     id: 5,
-    title: "Project one",
-    description: "Description ",
+    title: "Pear Exchange",
+    description: "Decentcralized AI model network",
     color: "#18181B",
     date: "Jan 5, 2025",
-    markdownContent: `# Project Five\n\nDetailed description here...`,
+    markdownContent: `# Pear Exchange
+
+Pear Exchange is an all-in-one digital marketplace, where you can post your own ML models and be paid for their use. Once can also purchase a wide variety of AI tokens using our proprietary currency, Juice Pear. 
+
+Users can also purchase stakes in other ML model builders on our platform. This would provide crucial funding for the top creators on our platform, while allowing everyday people to enjoy the financial benefits of the booming AI market. Users would be paid dividends based on the revenue of the individuals or organizations which they invest in.
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Features](#features)
+- [How we built it](#Howwebuiltit)
+- [Whats next?](#whatsnext)
+- [License](#license)
+- [Contact](#contact)
+
+## Introduction
+
+Pear Chain is designed to provide a decentralized solution for [brief description of the problem your project addresses]. By utilizing the NEAR Protocol, Pear Chain ensures fast, secure, and scalable transactions.
+
+## Features
+
+- **Decentralized**: Built on the NEAR Protocol for enhanced security and transparency.
+- **Efficient**: Optimized for fast transaction processing.
+- **User-Friendly**: Easy-to-use interface for seamless user experience.
+- **Real-Time data** See prices fluxate in real time to keep you in the loop.
+- **Personal Portfolio** Store all your favorite models on your watch list as well as tracking your current assests.
+
+## How we built it
+
+We built the blockchain backbone and the cryptocurrency for our project using NEAR Protocol, which helped us improve the efficiency and security of our platform. We first designed our frontend on Figma, before building it using HTML, CSS, Javascript, Typescript, React, and Chart.JS. We took advantage of the abundance of Financial Information available on the internet to inform the financial aspects of our project.
+
+## What's Next?
+
+We wanted a feature for users to be able to pay Juicy Pears to use our platform to create or personalize AI models. However, we realized quickly that this idea wasn't feasible for the scope of the hackathon. This could be something we look into implementing in the future. 
+
+`,
     
   }
 ]

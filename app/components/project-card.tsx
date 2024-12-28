@@ -55,8 +55,8 @@ export function ProjectCard({
       <div className="w-full h-full rounded-3xl overflow-hidden border border-white/10">
         <div className="absolute w-full h-full bg-zinc-900">
           <div className="p-8 h-full flex flex-col">
-            <h3 className="text-2xl font-medium text-white mb-8">{title}</h3>
-            <div className="w-full aspect-square bg-gray-300 rounded-2xl mb-8 flex items-center justify-center text-gray-600">
+            <h3 className="text-2xl font-medium-bold text-white mb-8">{title}</h3>
+            <div className="w-full aspect-square bg-gradient-to-br from-black via-purple-500 to-white-600 rounded-2xl mb-8 flex items-center justify-center text-gray-600">
               image
             </div>
             <div className="mt-auto text-white/90 text-sm">

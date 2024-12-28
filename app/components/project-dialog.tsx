@@ -33,7 +33,7 @@ export function ProjectDialog({
           <div className="p-8">
             <div className="text-sm text-gray-400 font-mono mb-4">{date}</div>
             <h1 className="text-2xl font-mono text-white mb-8">{title}</h1>
-            <div className="font-mono break-words w-full max-w-full">
+            <div className="font-mono text-white break-words w-full max-w-full">
               <MarkdownContent content={content} />
             </div>
           </div>
