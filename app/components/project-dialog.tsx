@@ -1,5 +1,3 @@
-'use client'
-
 import { Dialog, DialogContent } from "@/app/components/ui/dialog"
 import { MarkdownContent } from './markdown-content'
 import { X } from "lucide-react"
@@ -11,7 +9,6 @@ interface ProjectDialogProps {
   date: string
   content: string
 }
-
 
 export function ProjectDialog({
   isOpen,

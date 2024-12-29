@@ -1,6 +1,6 @@
-'use client'
 
 import { motion } from 'framer-motion'
+
 
 interface ProjectCardProps {
   title: string
@@ -22,6 +22,7 @@ export function ProjectCard({
   total, 
   onClick,
   onSelect
+
 }: ProjectCardProps) {
   const centerIndex = Math.floor(total / 2)
   const offset = (index - centerIndex) * 80
