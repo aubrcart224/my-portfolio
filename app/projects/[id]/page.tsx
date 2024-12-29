@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation"
 
 import { Card } from "@/app/components/ui/card"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/app/components/ui/button"
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 const projects = [
