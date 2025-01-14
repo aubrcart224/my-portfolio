@@ -49,7 +49,7 @@ export default function ProjectPage({ params }: { params: { id: string } }) {
                 Back
               </Button>
               <div className="mt-8">
-                <div className="w-full aspect-square bg-gradient-to-b from-gray-900 via-purple-600 to-purple-400 rounded-lg relative">
+                <div className="w-full aspect-square bg-gradient-to-b from-gray-800 via-blue-800 to-purple-600 rounded-lg relative">
                   <button
                     className="absolute left-2 top-1/2 -translate-y-1/2 text-white hover:text-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={!prevProject}
