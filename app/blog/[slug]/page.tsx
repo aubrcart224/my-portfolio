@@ -10,7 +10,7 @@ export const dynamic = 'force-static'
 export const dynamicParams = false
 
 export async function generateStaticParams() {
-  const postsDirectory = path.join(process.cwd(), 'content/blog')
+  const postsDirectory = path.join(process.cwd(), 'app/content/blog')
   const files = await fs.readdir(postsDirectory)
   
   return files
@@ -21,7 +21,7 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPost({ params }: { params: { slug: string } }) {
-  const filePath = path.join(process.cwd(), 'content/blog', `${params.slug}.mdx`)
+  const filePath = path.join(process.cwd(), 'app/content/blog', `${params.slug}.mdx`)
   
   try {
     const source = await fs.readFile(filePath, 'utf8')
