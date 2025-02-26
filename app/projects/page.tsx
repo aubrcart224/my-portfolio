@@ -2,9 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-
-// Optional: If you have a FadeText component, keep using it. Otherwise, you can remove it.
-import { FadeText } from '@/app/components/fade-text'
+import { FadeText } from '@/app/components/fade-text' // If you still want the fade effect
 
 // Example project data
 const projects = [
@@ -38,23 +36,37 @@ const projects = [
     title: "Insider transactions", 
     description: "Get insights on significant insider buys and sells that could shape market movements.",
   },
-  // Add more as needed
+  { 
+    id: 7, 
+    title: "Email updates", 
+    description: "Stay in the loop with timely alerts and daily summaries delivered right to your inbox.",
+  },
 ]
 
 export default function ProjectsPage() {
+  // OnWheel handler to scroll horizontally with mouse wheel
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    // Prevent the default vertical scroll
+    e.preventDefault()
+    // Scroll horizontally instead
+    e.currentTarget.scrollLeft += e.deltaY
+  }
+
   return (
     <div 
       className="
         relative 
         w-full 
         min-h-screen 
-        
         text-white 
         flex 
         flex-col 
         items-center 
-        justify-center
-        overflow-hidden
+        justify-start
+        pt-16
+        bg-[url('/path/to/donut-bg.png')] 
+        bg-no-repeat 
+        bg-cover
       "
     >
       {/* Title & Subtitle */}
@@ -65,7 +77,6 @@ export default function ProjectsPage() {
           transition={{ duration: 0.6 }}
           className="text-3xl md:text-5xl font-bold mb-2"
         >
-          {/* If you still want your FadeText effect, wrap it. Otherwise just use text. */}
           <FadeText>One a few more things.</FadeText>
         </motion.h1>
 
@@ -75,43 +86,92 @@ export default function ProjectsPage() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-gray-300 text-lg"
         >
-          There&apos;s even more to discover. Fey brings you a collection of advanced tools designed 
-          to refine and elevate your workflow.
+          There&apos;s even more to discover. Fey brings you a collection of advanced tools 
+          designed to refine and elevate your workflow.
         </motion.p>
       </div>
 
-      {/* Horizontally Scrolling Cards */}
-      <div className="w-full overflow-x-auto px-4 pb-10">
-        <div className="flex space-x-6">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+      {/* Horizontal-scrolling container (hide scrollbar, scroll on wheel) */}
+      <div
+        onWheel={handleWheel}
+        className="
+          w-full
+          flex
+          overflow-x-scroll
+          overflow-y-hidden
+          scrollbar-none
+          px-4
+          pb-10
+          space-x-4
+        "
+        style={{ scrollBehavior: 'smooth' }}
+      >
+        {projects.map((project, index) => (
+          <motion.div
+            key={project.id}
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            // group class so children can respond to hover
+            className="
+              group
+              relative
+              flex-shrink-0 
+              h-[400px]
+              w-[60px]  /* Narrow by default */
+              bg-white/10
+              backdrop-blur-sm
+              rounded-xl
+              cursor-pointer
+              transition-all
+              duration-300
+              hover:w-[300px] /* Expand on hover */
+              flex
+              flex-col
+              items-start
+              justify-center
+            "
+          >
+            {/* Rotated Title (visible by default, hidden on hover) */}
+            <div
               className="
-                flex-shrink-0 
-                w-72 
-                h-96 
-                rounded-xl 
-                p-6 
-                bg-white/10 
-                backdrop-blur-sm 
-                flex 
-                flex-col 
-                justify-between
+                absolute 
+                top-1/2 
+                -translate-y-1/2 
+                left-3
+                origin-left
+                -rotate-90 
+                text-lg
+                text-gray-100
+                font-semibold
+                tracking-wider
+                whitespace-nowrap
+                transition-opacity
+                duration-300
+                group-hover:opacity-0
               "
             >
-              <div>
-                <h3 className="text-xl font-semibold mb-2">
-                  {project.title}
-                </h3>
-                <p className="text-sm text-gray-200 leading-relaxed">
-                  {project.description}
-                </p>
-              </div>
-              
-              {/* Link to the project detail page */}
+              {project.title}
+            </div>
+
+            {/* Expanded content (hidden by default, visible on hover) */}
+            <div
+              className="
+                opacity-0
+                group-hover:opacity-100
+                transition-opacity
+                duration-300
+                p-4
+              "
+            >
+              <h3 className="text-xl font-semibold mb-2">
+                {project.title}
+              </h3>
+              <p className="text-sm text-gray-200 leading-relaxed mb-4">
+                {project.description}
+              </p>
+
+              {/* Link to project detail */}
               <Link href={`/projects/${project.id}`}>
                 <button
                   className="
@@ -129,9 +189,9 @@ export default function ProjectsPage() {
                   View project
                 </button>
               </Link>
-            </motion.div>
-          ))}
-        </div>
+            </div>
+          </motion.div>
+        ))}
       </div>
     </div>
   )
