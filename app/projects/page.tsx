@@ -8,37 +8,37 @@ import { FadeText } from '@/app/components/fade-text'
 const projects = [
   { 
     id: 1, 
-    title: "Live pricing", 
+    title: "Kernel Driver", 
     description: "Experience truly live pricing. Unlike other tools, there are no delays—get instant, real-time quotes every time.",
   },
   { 
     id: 2, 
-    title: "Analyst estimates", 
+    title: "Tetris AI", 
     description: "No more guesswork. Quickly access analyst predictions and insights to stay ahead of the curve.",
   },
   { 
     id: 3, 
-    title: "Company financials", 
+    title: "Personal website", 
     description: "Dive deep into financial data to make informed decisions for your next big move.",
   },
   { 
     id: 4, 
-    title: "Peer analysis", 
+    title: "Flash Flow", 
     description: "Compare performance across multiple peers and benchmarks at a glance.",
   },
   { 
     id: 5, 
-    title: "Historical earnings", 
+    title: "Mobile app demo", 
     description: "Analyze trends over time to forecast future results and mitigate risk.",
   },
   { 
     id: 6, 
-    title: "Insider transactions", 
+    title: "Pear Exchange", 
     description: "Get insights on significant insider buys and sells that could shape market movements.",
   },
   { 
     id: 7, 
-    title: "Email updates", 
+    title: "Ai ressearch agent", 
     description: "Stay in the loop with timely alerts and daily summaries delivered right to your inbox.",
   },
 ]
@@ -63,21 +63,21 @@ export default function ProjectsPage() {
         items-center 
         justify-start
         pt-16
-        pb-12
+        pb-10
         bg-[url('/path/to/donut-bg.png')] 
         bg-no-repeat 
         bg-cover
       "
     >
       {/* Title & Subtitle */}
-      <div className="mb-8 text-center max-w-2xl mx-auto px-4">
+      <div className="mb-6 text-center max-w-2xl mx-auto px-4">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-3xl md:text-5xl font-bold mb-2"
+          className="text-3xl md:text-5xl font-bold mb-4"
         >
-          <FadeText>One a few more things.</FadeText>
+          <FadeText>Projects are important</FadeText>
         </motion.h1>
 
         <motion.p
@@ -86,8 +86,7 @@ export default function ProjectsPage() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-gray-300 text-lg"
         >
-          There&apos;s even more to discover. Fey brings you a collection of advanced tools 
-          designed to refine and elevate your workflow.
+          Ive worked on a wide varity of projects, heres a distilled list of some of my best, take a look around.
         </motion.p>
       </div>
 
@@ -104,7 +103,7 @@ export default function ProjectsPage() {
           space-x-4
           justify-center
           scrollbar-hide
-          mt-4
+          mt-2
           mb-8
         "
         style={{ 
@@ -151,8 +150,7 @@ export default function ProjectsPage() {
                 absolute 
                 top-1/2
                 -translate-y-40
-                left-1/2
-                -translate-x-1/2
+                left-4
                 text-lg
                 text-gray-100
                 font-semibold
@@ -160,7 +158,7 @@ export default function ProjectsPage() {
                 whitespace-nowrap
                 transition-opacity
                 duration-300
-                group-hover:opacity-0
+                
                 [writing-mode:vertical-lr]
                 rotate-360
               "
@@ -175,34 +173,39 @@ export default function ProjectsPage() {
                 group-hover:opacity-100
                 transition-opacity
                 duration-300
-                p-4
+                p-6
+                w-full
+                h-full
+                flex
+                flex-col
+                justify-end
               "
             >
-              <h3 className="text-xl font-semibold mb-2">
-                {project.title}
-              </h3>
               <p className="text-sm text-gray-200 leading-relaxed mb-4">
                 {project.description}
               </p>
 
-              {/* Link to project detail */}
-              <Link href={`/projects/${project.id}`}>
-                <button
-                  className="
-                    text-sm 
-                    text-white 
+              {/* Button with circle icon */}
+              <div className="flex items-center">
+                <Link href={`/projects/${project.id}`} className="flex items-center">
+                  <div className="
+                    w-6 
+                    h-6 
+                    rounded-full 
                     border 
-                    border-white/20 
-                    px-4 
-                    py-2 
-                    rounded 
-                    hover:bg-white/20
-                    transition
-                  "
-                >
-                  View project
-                </button>
-              </Link>
+                    border-white/50 
+                    flex 
+                    items-center 
+                    justify-center 
+                    mr-2
+                  ">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </div>
+                  <span className="text-sm text-white">Preview {project.title.toLowerCase()}</span>
+                </Link>
+              </div>
             </div>
           </motion.div>
         ))}
