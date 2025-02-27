@@ -130,7 +130,7 @@ export default function ProjectsPage() {
               relative
               flex-shrink-0 
               h-[400px]
-              w-[60px]  /* Narrow by default */
+              w-[80px]  /* Narrow by default */
               bg-white/10
               backdrop-blur-sm
               rounded-xl
@@ -150,7 +150,7 @@ export default function ProjectsPage() {
                 absolute 
                 top-1/2
                 -translate-y-40
-                left-4
+                left-6
                 text-lg
                 text-gray-100
                 font-semibold
