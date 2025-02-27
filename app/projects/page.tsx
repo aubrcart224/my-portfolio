@@ -2,9 +2,9 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { FadeText } from '@/app/components/fade-text' // If you still want the fade effect
+import { FadeText } from '@/app/components/fade-text' 
 
-// Example project data
+// Project data 
 const projects = [
   { 
     id: 1, 
@@ -56,14 +56,14 @@ export default function ProjectsPage() {
     <div 
       className="
         relative 
-        w-full 
-        min-h-screen 
+        w-full        
         text-white 
         flex 
         flex-col 
         items-center 
         justify-start
         pt-16
+        pb-12
         bg-[url('/path/to/donut-bg.png')] 
         bg-no-repeat 
         bg-cover
@@ -99,13 +99,26 @@ export default function ProjectsPage() {
           flex
           overflow-x-scroll
           overflow-y-hidden
-          scrollbar-none
           px-4
-          pb-10
+          pb-6
           space-x-4
+          justify-center
+          scrollbar-hide
+          mt-4
+          mb-8
         "
-        style={{ scrollBehavior: 'smooth' }}
+        style={{ 
+          scrollBehavior: 'smooth',
+          msOverflowStyle: 'none',  /* IE and Edge */
+          scrollbarWidth: 'none'    /* Firefox */
+        }}
       >
+        <style jsx>{`
+          div::-webkit-scrollbar {
+            display: none;
+          }
+        `}</style>
+        
         {projects.map((project, index) => (
           <motion.div
             key={project.id}
@@ -132,15 +145,14 @@ export default function ProjectsPage() {
               justify-center
             "
           >
-            {/* Rotated Title (visible by default, hidden on hover) */}
+            {/* Vertical Title (visible by default, hidden on hover) */}
             <div
               className="
                 absolute 
-                top-1/2 
-                -translate-y-1/2 
-                left-3
-                origin-left
-                -rotate-90 
+                top-1/2
+                -translate-y-40
+                left-1/2
+                -translate-x-1/2
                 text-lg
                 text-gray-100
                 font-semibold
@@ -149,6 +161,8 @@ export default function ProjectsPage() {
                 transition-opacity
                 duration-300
                 group-hover:opacity-0
+                [writing-mode:vertical-lr]
+                rotate-360
               "
             >
               {project.title}
