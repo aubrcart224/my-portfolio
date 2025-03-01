@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { FadeText } from '@/app/components/fade-text' 
+import { FadeText } from '@/app/components/fade-text'
+import { useState, useEffect } from 'react'
 
 // Project data 
 const projects = [
@@ -44,6 +45,27 @@ const projects = [
 ]
 
 export default function ProjectsPage() {
+  // Keep both states but now focused will update with hover
+  const [focusedProject, setFocusedProject] = useState<number>(1) // Start with first project focused
+  const [hoveredProject, setHoveredProject] = useState<number | null>(null)
+  
+  // Set initial focus when component mounts
+  useEffect(() => {
+    setFocusedProject(1)
+  }, [])
+
+  // Handler for mouse enter - update both hovered and focused state
+  const handleMouseEnter = (projectId: number) => {
+    setHoveredProject(projectId)
+    setFocusedProject(projectId) // Update focused project when hovering
+  }
+
+  // Handler for mouse leave - only clear hovered state, keep focused state
+  const handleMouseLeave = () => {
+    setHoveredProject(null)
+    // Don't reset focusedProject, so the last hovered card stays focused
+  }
+
   // OnWheel handler to scroll horizontally with mouse wheel
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     // Prevent the default vertical scroll
@@ -64,7 +86,7 @@ export default function ProjectsPage() {
         justify-start
         pt-16
         pb-10
-        bg-[url('/path/to/donut-bg.png')] 
+        
         bg-no-repeat 
         bg-cover
       "
@@ -118,97 +140,101 @@ export default function ProjectsPage() {
           }
         `}</style>
         
-        {projects.map((project, index) => (
-          <motion.div
-            key={project.id}
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            // group class so children can respond to hover
-            className="
-              group
-              relative
-              flex-shrink-0 
-              h-[400px]
-              w-[80px]  /* Narrow by default */
-              bg-white/10
-              backdrop-blur-sm
-              rounded-xl
-              cursor-pointer
-              transition-all
-              duration-300
-              hover:w-[300px] /* Expand on hover */
-              flex
-              flex-col
-              items-start
-              justify-center
-            "
-          >
-            {/* Vertical Title (visible by default, hidden on hover) */}
-            <div
-              className="
-                absolute 
-                top-1/2
-                -translate-y-40
-                left-6
-                text-lg
-                text-gray-100
-                font-semibold
-                tracking-wider
-                whitespace-nowrap
-                transition-opacity
+        {projects.map((project, index) => {
+          // Calculate if this card should be expanded (either it's focused or hovered)
+          const isExpanded = hoveredProject === project.id || 
+                            (hoveredProject === null && focusedProject === project.id);
+                            
+          return (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className={`
+                group
+                relative
+                flex-shrink-0 
+                h-[400px]
+                ${isExpanded ? 'w-[300px]' : 'w-[80px]'}
+                bg-white/10
+                backdrop-blur-sm
+                rounded-xl
+                cursor-pointer
+                transition-all
                 duration-300
-                
-                [writing-mode:vertical-lr]
-                rotate-360
-              "
-            >
-              {project.title}
-            </div>
-
-            {/* Expanded content (hidden by default, visible on hover) */}
-            <div
-              className="
-                opacity-0
-                group-hover:opacity-100
-                transition-opacity
-                duration-300
-                p-6
-                w-full
-                h-full
                 flex
                 flex-col
-                justify-end
-              "
+                items-start
+                justify-center
+              `}
+              onMouseEnter={() => handleMouseEnter(project.id)}
+              onMouseLeave={handleMouseLeave}
             >
-              <p className="text-sm text-gray-200 leading-relaxed mb-4">
-                {project.description}
-              </p>
-
-              {/* Button with circle icon */}
-              <div className="flex items-center">
-                <Link href={`/projects/${project.id}`} className="flex items-center">
-                  <div className="
-                    w-6 
-                    h-6 
-                    rounded-full 
-                    border 
-                    border-white/50 
-                    flex 
-                    items-center 
-                    justify-center 
-                    mr-2
-                  ">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                  </div>
-                  <span className="text-sm text-white">Preview {project.title.toLowerCase()}</span>
-                </Link>
+              {/* Vertical Title (always visible) */}
+              <div
+                className={`
+                  absolute 
+                  top-1/2
+                  -translate-y-40
+                  left-6
+                  text-lg
+                  text-gray-100
+                  font-semibold
+                  tracking-wider
+                  whitespace-nowrap
+                  transition-opacity
+                  duration-300
+                  [writing-mode:vertical-lr]
+                  rotate-360
+                `}
+              >
+                {project.title}
               </div>
-            </div>
-          </motion.div>
-        ))}
+
+              {/* Expanded content (visible when focused or hovered) */}
+              <div
+                className={`
+                  ${isExpanded ? 'opacity-100' : 'opacity-0'}
+                  transition-opacity
+                  duration-300
+                  p-6
+                  w-full
+                  h-full
+                  flex
+                  flex-col
+                  justify-end
+                `}
+              >
+                <p className="text-sm text-gray-200 leading-relaxed mb-4">
+                  {project.description}
+                </p>
+
+                {/* Button with circle icon */}
+                <div className="flex items-center">
+                  <Link href={`/projects/${project.id}`} className="flex items-center">
+                    <div className="
+                      w-6 
+                      h-6 
+                      rounded-full 
+                      border 
+                      border-white/50 
+                      flex 
+                      items-center 
+                      justify-center 
+                      mr-2
+                    ">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                      </svg>
+                    </div>
+                    <span className="text-sm text-white">Preview {project.title.toLowerCase()}</span>
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          )
+        })}
       </div>
     </div>
   )
