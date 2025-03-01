@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { FadeText } from '@/app/components/fade-text'
 import { useState, useEffect } from 'react'
+import { RainBorder } from '@/app/components/RainBorder'  
 
 // Project data 
 const projects = [
@@ -70,7 +71,7 @@ export default function ProjectsPage() {
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     // Prevent the default vertical scroll
     e.preventDefault()
-    // Scroll horizontally instead
+    // Scroll 1orizontally instead
     e.currentTarget.scrollLeft += e.deltaY
   }
 
@@ -84,19 +85,17 @@ export default function ProjectsPage() {
         flex-col 
         items-center 
         justify-start
-        pt-16
-        pb-10
-        
+        pb-4
         bg-no-repeat 
         bg-cover
       "
     >
       {/* Title & Subtitle */}
-      <div className="mb-6 text-center max-w-2xl mx-auto px-4">
+      <div className="mb-8 text-center max-w-2xl mx-auto px-4">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
           className="text-3xl md:text-5xl font-bold mb-4"
         >
           <FadeText>Projects are important</FadeText>
@@ -121,12 +120,11 @@ export default function ProjectsPage() {
           overflow-x-scroll
           overflow-y-hidden
           px-4
-          pb-6
+          pb-
           space-x-4
           justify-center
           scrollbar-hide
           mt-2
-          mb-8
         "
         style={{ 
           scrollBehavior: 'smooth',
@@ -146,93 +144,106 @@ export default function ProjectsPage() {
                             (hoveredProject === null && focusedProject === project.id);
                             
           return (
-            <motion.div
+            <RainBorder 
               key={project.id}
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              borderWidth={1.5}
               className={`
-                group
-                relative
-                flex-shrink-0 
-                h-[400px]
-                ${isExpanded ? 'w-[300px]' : 'w-[80px]'}
-                bg-white/10
-                backdrop-blur-sm
                 rounded-xl
-                cursor-pointer
-                transition-all
-                duration-300
-                flex
-                flex-col
-                items-start
-                justify-center
+                ${isExpanded ? 'w-[300px]' : 'w-[80px]'}
               `}
-              onMouseEnter={() => handleMouseEnter(project.id)}
-              onMouseLeave={handleMouseLeave}
+              duration={20}
+              pathLength={0.3}
+              isActive={true}
             >
-              {/* Vertical Title (always visible) */}
-              <div
+              <motion.div
+                initial={{ opacity: 0, x: 40 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
                 className={`
-                  absolute 
-                  top-1/2
-                  -translate-y-40
-                  left-6
-                  text-lg
-                  text-gray-100
-                  font-semibold
-                  tracking-wider
-                  whitespace-nowrap
-                  transition-opacity
+                  group
+                  relative
+                  flex-shrink-0 
+                  h-[425px]
+                  ${isExpanded ? 'w-[300px]' : 'w-[80px]'}
+                  bg-red/10
+                  backdrop-blur-[8px]
+                  border-2.5 border-black/20
+                  
+                  rounded-xl
+                  cursor-pointer
+                  transition-all
                   duration-300
-                  [writing-mode:vertical-lr]
-                  rotate-360
-                `}
-              >
-                {project.title}
-              </div>
-
-              {/* Expanded content (visible when focused or hovered) */}
-              <div
-                className={`
-                  ${isExpanded ? 'opacity-100' : 'opacity-0'}
-                  transition-opacity
-                  duration-300
-                  p-6
-                  w-full
-                  h-full
                   flex
                   flex-col
-                  justify-end
+                  items-start
+                  justify-center
                 `}
+                onMouseEnter={() => handleMouseEnter(project.id)}
+                onMouseLeave={handleMouseLeave}
               >
-                <p className="text-sm text-gray-200 leading-relaxed mb-4">
-                  {project.description}
-                </p>
-
-                {/* Button with circle icon */}
-                <div className="flex items-center">
-                  <Link href={`/projects/${project.id}`} className="flex items-center">
-                    <div className="
-                      w-6 
-                      h-6 
-                      rounded-full 
-                      border 
-                      border-white/50 
-                      flex 
-                      items-center 
-                      justify-center 
-                      mr-2
-                    ">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                      </svg>
-                    </div>
-                    <span className="text-sm text-white">Preview {project.title.toLowerCase()}</span>
-                  </Link>
+                {/* Vertical Title (always visible) */}
+                <div
+                  className={`
+                    absolute 
+                    top-1/2
+                    -translate-y-40
+                    left-6
+                    text-lg
+                    text-gray-100
+                    font-semibold
+                    tracking-wider
+                    whitespace-nowrap
+                    transition-opacity
+                    duration-300
+                    [writing-mode:vertical-lr]
+                    rotate-360
+                  `}
+                >
+                  {project.title}
                 </div>
-              </div>
-            </motion.div>
+
+                {/* Expanded content (visible when focused or hovered) */}
+                <div
+                  className={`
+                    ${isExpanded ? 'opacity-100' : 'opacity-0'}
+                    transition-opacity
+                    duration-300
+                    p-6
+                    w-full
+                    h-full
+                    flex
+                    flex-col
+                    justify-end
+                  `}
+                >
+                  <p className="text-sm text-gray-200 leading-relaxed mb-4">
+                    {project.description}
+                  </p>
+
+                  {/* Button with circle icon */}
+                  <div className="flex items-center">
+                    <Link href={`/projects/${project.id}`} className="flex items-center">
+                      <div className="
+                        w-6 
+                        h-6 
+                        rounded-full 
+                        border 
+                        border-white/50 
+                        flex 
+                        items-center 
+                        justify-center 
+                        mr-2
+                      ">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                      </div>
+                      <span className="text-sm text-white">Preview {project.title.toLowerCase()}</span>
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            </RainBorder>
           )
         })}
       </div>
