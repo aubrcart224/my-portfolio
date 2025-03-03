@@ -119,9 +119,9 @@ export default function ProjectsPage() {
           flex
           overflow-x-scroll
           overflow-y-hidden
-          px-4
+          px-2
           pb-
-          space-x-4
+          space-x-2
           justify-center
           scrollbar-hide
           mt-2
@@ -137,7 +137,6 @@ export default function ProjectsPage() {
             display: none;
           }
         `}</style>
-        
         {projects.map((project, index) => {
           // Calculate if this card should be expanded (either it's focused or hovered)
           const isExpanded = hoveredProject === project.id || 
@@ -161,7 +160,7 @@ export default function ProjectsPage() {
                 rounded-xl
                 cursor-pointer
                 transition-all
-                duration-300
+                duration-500
                 flex
                 flex-col
                 items-start
@@ -171,7 +170,7 @@ export default function ProjectsPage() {
               onMouseLeave={handleMouseLeave}
             >
               {/* Add RainBorder as an overlay inside the motion.div */}
-              <div className="absolute inset-0 pointer-events-none z-0">
+              <div className="absolute inset-0 pointer-events-none ">
                 <RainBorder 
                   borderWidth={1.5}
                   className={`
@@ -186,7 +185,7 @@ export default function ProjectsPage() {
                 </RainBorder>
               </div>
 
-              {/* Vertical Title (always visible) - add z-index */}
+              {/* Vertical Title (always visible)*/}
               <div
                 className={`
                   absolute 
@@ -202,13 +201,12 @@ export default function ProjectsPage() {
                   duration-300
                   [writing-mode:vertical-lr]
                   rotate-360
-                  z-10
                 `}
               >
                 {project.title}
               </div>
 
-              {/* Expanded content - add z-index */}
+              {/* Expanded content -*/}
               <div
                 className={`
                   ${isExpanded ? 'opacity-100' : 'opacity-0'}
@@ -220,7 +218,7 @@ export default function ProjectsPage() {
                   flex
                   flex-col
                   justify-end
-                  z-10
+                  
                 `}
               >
                 <p className="text-sm text-gray-200 leading-relaxed mb-4">

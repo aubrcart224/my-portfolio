@@ -16,7 +16,7 @@ interface Project {
     title: string;
     description?: string;
     date: string;
-    
+
   }
 
 // Helper function to get project data
