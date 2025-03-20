@@ -3,45 +3,7 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import ReactMarkdown from 'react-markdown';
 import Image from 'next/image';
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-
-
-// Define Project interface
-interface Project {
-
-    id: string;
-    content: string;
-    title: string;
-    description?: string;
-    date: string;
-
-  }
-
-// Helper function to get project data
-async function getProjectData(id: string) {
-  try {
-    const projectsDirectory = path.join(process.cwd(), 'app/content/projects');
-    const filePath = path.join(projectsDirectory, `${id}.md`);
-    
-    if (!fs.existsSync(filePath)) {
-      return null;
-    }
-    
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    const { data, content } = matter(fileContents);
-    
-    return {
-      id,
-      ...data,
-      content
-    };
-  } catch (error) {
-    console.error("Error fetching project:", error);
-    return null;
-  }
-}
+import { getProjectData, Project } from '@/app/utils/projectUtils';
 
 // Generate metadata for the page
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
@@ -102,17 +64,17 @@ export default async function ProjectPage({ params }: { params: { id: string } }
     notFound();
   }
   
-  const date = new Date(project.date).toLocaleDateString('en-US', {
+  const date = project.date ? new Date(project.date).toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
     year: 'numeric'
-  }).toLowerCase();
+  }).toLowerCase() : '';
   
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="max-w-3xl mx-auto px-4 py-12">
         <div className="mb-8">
-          <p className="text-gray-400 mb-2">{date}</p>
+          {project.date && <p className="text-gray-400 mb-2">{date}</p>}
           <h1 className="text-4xl font-bold mb-6">{project.title}</h1>
         </div>
         

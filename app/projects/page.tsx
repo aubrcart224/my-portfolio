@@ -1,46 +1,47 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
 import { FadeText } from '@/app/components/fade-text'
 import { useState, useEffect } from 'react'
 import { RainBorder } from '@/app/components/RainBorder'  
+import { ProjectModal } from '@/app/components/ProjectModal'
+import { Project } from '@/app/utils/projectUtils'
 
 // Project data 
 const projects = [
   { 
-    id: 1, 
+    id: "kernel-driver", 
     title: "Kernel Driver", 
     description: "Experience truly live pricing. Unlike other tools, there are no delays—get instant, real-time quotes every time.",
   },
   { 
-    id: 2, 
+    id: "tetris-ai", 
     title: "Tetris AI", 
     description: "No more guesswork. Quickly access analyst predictions and insights to stay ahead of the curve.",
   },
   { 
-    id: 3, 
+    id: "personal-website", 
     title: "Personal website", 
     description: "Dive deep into financial data to make informed decisions for your next big move.",
   },
   { 
-    id: 4, 
+    id: "flash-flow", 
     title: "Flash Flow", 
     description: "Compare performance across multiple peers and benchmarks at a glance.",
   },
   { 
-    id: 5, 
+    id: "mobile-app-demo", 
     title: "Mobile app demo", 
     description: "Analyze trends over time to forecast future results and mitigate risk.",
   },
   { 
-    id: 6, 
+    id: "pear-exchange", 
     title: "Pear Exchange", 
     description: "Get insights on significant insider buys and sells that could shape market movements.",
   },
   { 
-    id: 7, 
-    title: "Ai ressearch agent", 
+    id: "ai-research-agent", 
+    title: "AI Research Agent", 
     description: "Stay in the loop with timely alerts and daily summaries delivered right to your inbox.",
   },
 ]
@@ -49,6 +50,11 @@ export default function ProjectsPage() {
   // Keep both states but now focused will update with hover
   const [focusedProject, setFocusedProject] = useState<number>(1) // Start with first project focused
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
+  
+  // State for modal
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
   
   // Set initial focus when component mounts
   useEffect(() => {
@@ -71,8 +77,29 @@ export default function ProjectsPage() {
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     // Prevent the default vertical scroll
     e.preventDefault()
-    // Scroll 1orizontally instead
+    // Scroll horizontally instead
     e.currentTarget.scrollLeft += e.deltaY
+  }
+
+  // Function to load project data and open modal
+  const openProjectModal = async (projectId: string) => {
+    setIsLoading(true)
+    
+    try {
+      // Small delay for better transition experience
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      const response = await fetch(`/api/projects/${projectId}`)
+      if (!response.ok) throw new Error('Failed to fetch project')
+      
+      const projectData = await response.json()
+      setSelectedProject(projectData)
+      setIsModalOpen(true)
+    } catch (error) {
+      console.error('Error loading project:', error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -107,7 +134,7 @@ export default function ProjectsPage() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-gray-300 text-lg"
         >
-          Ive worked on a wide varity of projects, heres a distilled list of some of my best, take a look around.
+          I've worked on a wide variety of projects, here's a distilled list of some of my best, take a look around.
         </motion.p>
       </div>
 
@@ -139,8 +166,8 @@ export default function ProjectsPage() {
         `}</style>
         {projects.map((project, index) => {
           // Calculate if this card should be expanded (either it's focused or hovered)
-          const isExpanded = hoveredProject === project.id || 
-                            (hoveredProject === null && focusedProject === project.id);
+          const isExpanded = hoveredProject === index + 1 || 
+                            (hoveredProject === null && focusedProject === index + 1);
                             
           return (
             <motion.div
@@ -166,7 +193,7 @@ export default function ProjectsPage() {
                 items-start
                 justify-center
               `}
-              onMouseEnter={() => handleMouseEnter(project.id)}
+              onMouseEnter={() => handleMouseEnter(index + 1)}
               onMouseLeave={handleMouseLeave}
             >
               {/* Add RainBorder as an overlay inside the motion.div */}
@@ -227,8 +254,17 @@ export default function ProjectsPage() {
 
                 {/* Button with circle icon */}
                 <div className="flex items-center">
-                  <Link href={`/projects/${project.id}`} className="flex items-center">
-                    <div className="
+                  <button 
+                    onClick={() => openProjectModal(project.id)}
+                    className={`
+                      flex 
+                      items-center
+                      transition-opacity
+                      ${isLoading ? 'opacity-70' : 'opacity-100 hover:opacity-90'}
+                    `}
+                    disabled={isLoading}
+                  >
+                    <div className={`
                       w-6 
                       h-6 
                       rounded-full 
@@ -238,19 +274,36 @@ export default function ProjectsPage() {
                       items-center 
                       justify-center 
                       mr-2
-                    ">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                      </svg>
+                      ${isLoading ? 'animate-pulse' : ''}
+                    `}>
+                      {isLoading ? (
+                        <svg className="animate-spin h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                      ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                      )}
                     </div>
-                    <span className="text-sm text-white">Preview {project.title.toLowerCase()}</span>
-                  </Link>
+                    <span className="text-sm text-white">
+                      {isLoading ? 'Loading...' : `Preview ${project.title.toLowerCase()}`}
+                    </span>
+                  </button>
                 </div>
               </div>
             </motion.div>
           )
         })}
       </div>
+
+      {/* Project Modal */}
+      <ProjectModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        project={selectedProject}
+      />
     </div>
   )
 }

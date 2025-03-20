@@ -19,7 +19,7 @@ export function ProjectDialog({
 }: ProjectDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-[800px] p-0 bg-[#1a1a1a] border-zinc-800 overflow-x-hidden">
+      <DialogContent className="max-w-[800px] p-0 bg-[#1a1a1a] border-zinc-800 overflow-x-hidden fixed left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%] z-50">
         <DialogTitle className="sr-only">{title}</DialogTitle>
         <button
           onClick={onClose}
