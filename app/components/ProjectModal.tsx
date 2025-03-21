@@ -98,7 +98,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, onClose, pro
           {/* Backdrop */}
           <motion.div 
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: 0.85 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40"
             onClick={onClose}
@@ -109,11 +109,11 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ isOpen, onClose, pro
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 
-                      w-[90%] max-w-3xl max-h-[90vh] bg-black/90 
+            className="
+                      fixed top left 
+                      w-[100%]  max-w-[85vh] max-h-[80vh] bg-black/90 
                       border border-gray-800 rounded-xl shadow-2xl
-                      flex flex-col"
-            style={{ margin: 0 }}
+                      flex flex-col z-50"
           >
             {/* Header */}
             <div className="p-6 border-b border-gray-800">
