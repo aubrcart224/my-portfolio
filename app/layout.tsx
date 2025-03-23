@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import ParticleBackground from '@/app/components/donut';
+import Dune from '@/app/components/Dune';
 import './globals.css'
 import { Home } from 'lucide-react'
 
@@ -18,7 +19,8 @@ export default function Layout({
   return (
     <html>
       <body>
-    <ParticleBackground>
+      
+    
     <div className="min-h-screen w-full flex flex-col items-center justify-between p-2 text-white relative z-10">
       {/* Main content area */}
       <main className="flex-1 w-full max-w-4xl flex flex-col items-center justify-center">
@@ -87,7 +89,8 @@ export default function Layout({
         
       </nav>
     </div>
-    </ParticleBackground>
+    
+    
     </body>
     </html>
   )

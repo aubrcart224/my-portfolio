@@ -1,24 +1,18 @@
-//import { Layout } from "@/app/layout"
-import { FadeText } from "@/app/components/fade-text"
+// pages/index.js
+'use client'
+import React from 'react';
+import BackgroundAnimation from '@/app/components/mathematical-pattern';
 
+const Home = () => (
+  <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
+    <div style={{ position: 'absolute', top: 0, left: 0, zIndex: -1 }}>
+      <BackgroundAnimation />
+    </div>
+    <div style={{ position: 'relative', zIndex: 1 }}>
+      <h1>Your Website Content</h1>
+      {/* Other content */}
+    </div>
+  </div>
+);
 
-export default function HomePage() {
-  return (
-      <div className="text-center space-y-4 text-white">
-        <h1 className="text-4xl font-bold text-white mb-12">
-        <FadeText>Aubrey Carter</FadeText>
-        </h1> 
-        <p className="text-xl text-white mb-4">
-        <FadeText>
-          Building things
-        </FadeText>
-          </p>
-        <p className="max-w-md mx-auto text-white mb-12">
-        <FadeText>
-          Someone trying to make the world a better place with technology 
-        </FadeText>
-        </p>
-      </div>
-  )
-}
-
+export default Home;
