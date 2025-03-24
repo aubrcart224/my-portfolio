@@ -23,6 +23,6 @@
     },
     "types": ["node"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/components/dune.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/components/dune.jsx", "app/components/three-bg.jsx"],
   "exclude": ["node_modules"]
 }
