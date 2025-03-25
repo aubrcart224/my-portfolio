@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { FadeText } from "../components/fade-text"
-
+import WebGLPattern from "../components/webgl-pattern"
 
 const blogPosts = [
   { 
@@ -35,7 +35,8 @@ const blogPosts = [
 export default function BlogPage() {
   return (
     <>
-      <div className="w-full max-w-2xl mx-auto">
+      <div className="w-full max-w-2xl mx-auto">\
+      <WebGLPattern></WebGLPattern>
         <h1 className="text-4xl font-bold text-center mb-16">
           <FadeText>
             Blog posts

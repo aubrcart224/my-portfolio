@@ -2,10 +2,12 @@
 
 import React from 'react';
 import { Button } from '@/app/components/ui/button';
+import WebGLPattern from '../components/webgl-pattern';
 
 export default function ResumePage() {
   return (
     <div className="container mx-auto px-4 pt-4">
+      <WebGLPattern></WebGLPattern>
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Resume</h1>
         <a href="/resume.pdf" download>

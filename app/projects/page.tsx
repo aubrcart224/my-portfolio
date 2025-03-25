@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 import { RainBorder } from '@/app/components/RainBorder'  
 import { ProjectModal } from '@/app/components/ProjectModal'
 import { Project } from '@/app/utils/projectUtils'
+import WebGLPattern from '../components/webgl-pattern'
 
 // Project data 
 const projects = [
@@ -117,6 +118,8 @@ export default function ProjectsPage() {
         bg-cover
       "
     >
+      
+      <WebGLPattern></WebGLPattern>
       {/* Title & Subtitle */}
       <div className="mb-8 text-center max-w-2xl mx-auto px-4">
         <motion.h1
