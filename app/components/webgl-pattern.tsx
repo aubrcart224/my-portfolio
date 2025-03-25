@@ -147,13 +147,14 @@ export default function WebGLPattern() {
 
     // Generate grid of points
     function generatePoints() {
-      const width = canvas.width / (window.devicePixelRatio || 1)
-      const height = canvas.height / (window.devicePixelRatio || 1)
+      const safeCanvas = canvas! // We know canvas is not null since we checked at effect start
+      const width = safeCanvas.width / (window.devicePixelRatio || 1)
+      const height = safeCanvas.height / (window.devicePixelRatio || 1)
       const points = []
 
       // Determine point density based on screen size
       const screenSize = width * height
-      let density = 4 // Default density increased from 2 to 4
+      let density = 1.3 // Default density increased from 2 to 4
 
       if (screenSize > 1920 * 1080) {
         density = 1.3 // Lower density for larger screens (increased from 3 to 6)
@@ -180,6 +181,7 @@ export default function WebGLPattern() {
 
     // Set clear color
     gl.clearColor(6 / 255, 6 / 255, 6 / 255, 1.0)
+    
 
     // Animation variables
     let time = 0
@@ -196,34 +198,38 @@ export default function WebGLPattern() {
       // Update time with consistent speed regardless of frame rate
       time += (PI / 60) * (deltaTime / (1 / 60))
 
+      // Assert gl and canvas are non-null since we checked at effect start
+      const safeGl = gl!
+      const safeCanvas = canvas!
+
       // Clear with semi-transparent background for trail effect
-      gl.clear(gl.COLOR_BUFFER_BIT)
+      safeGl.clear(safeGl.COLOR_BUFFER_BIT)
 
       // Use the program
-      gl.useProgram(programRef.current as WebGLProgram)
+      safeGl.useProgram(program)
 
       // Set the uniforms
-      gl.uniform1f(timeUniformLocation, time)
-      gl.uniform2f(
+      safeGl.uniform1f(timeUniformLocation, time)
+      safeGl.uniform2f(
         resolutionUniformLocation,
-        canvas.width / (window.devicePixelRatio || 1),
-        canvas.height / (window.devicePixelRatio || 1),
+        safeCanvas.width / (window.devicePixelRatio || 1),
+        safeCanvas.height / (window.devicePixelRatio || 1),
       )
 
       // Set up the position attribute
-      gl.enableVertexAttribArray(positionAttributeLocation)
-      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
-      gl.vertexAttribPointer(
+      safeGl.enableVertexAttribArray(positionAttributeLocation)
+      safeGl.bindBuffer(safeGl.ARRAY_BUFFER, positionBuffer)
+      safeGl.vertexAttribPointer(
         positionAttributeLocation,
         2, // 2 components per vertex
-        gl.FLOAT, // data type
+        safeGl.FLOAT, // data type
         false, // don't normalize
         0, // stride (0 = auto)
         0, // offset
       )
 
       // Draw the points
-      gl.drawArrays(gl.POINTS, 0, positions.length / 2)
+      safeGl.drawArrays(safeGl.POINTS, 0, positions.length / 2)
 
       // Request next frame
       requestAnimationFrame(render)
@@ -250,4 +256,3 @@ export default function WebGLPattern() {
     </div>
   )
 }
-
