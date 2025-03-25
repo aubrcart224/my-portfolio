@@ -156,7 +156,7 @@ export default function WebGLPattern() {
       let density = 4 // Default density increased from 2 to 4
 
       if (screenSize > 1920 * 1080) {
-        density = 1.5 // Lower density for larger screens (increased from 3 to 6)
+        density = 1.3 // Lower density for larger screens (increased from 3 to 6)
       } else if (screenSize < 768 * 1024) {
         density = 2 // Higher density for smaller screens (increased from 1 to 2)
       }
