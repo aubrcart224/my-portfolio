@@ -21,7 +21,7 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPost({ params }: { params: { slug: string } }) {
-  const filePath = path.join(process.cwd(), 'app/content/blog', `${params.slug}.mdx`)
+  const filePath = path.join(process.cwd(), 'app/content/blogs', `${params.slug}.mdx`) //check file path for errors 
   
   try {
     const source = await fs.readFile(filePath, 'utf8')
