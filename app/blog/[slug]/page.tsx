@@ -10,7 +10,7 @@ export const dynamic = 'force-static'
 export const dynamicParams = false
 
 export async function generateStaticParams() {
-  const postsDirectory = path.join(process.cwd(), 'app/content/blog')
+  const postsDirectory = path.join(process.cwd(), 'app/content/blogs')
   const files = await fs.readdir(postsDirectory)
   
   return files
