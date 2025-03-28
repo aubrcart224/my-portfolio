@@ -13,37 +13,37 @@ const projects = [
   { 
     id: "kernel-driver", 
     title: "Kernel Driver", 
-    description: "Experience truly live pricing. Unlike other tools, there are no delays—get instant, real-time quotes every time.",
+    description: "A shared memeory kernel driver",
   },
   { 
     id: "tetris-ai", 
     title: "Tetris AI", 
-    description: "No more guesswork. Quickly access analyst predictions and insights to stay ahead of the curve.",
+    description: "ML model trained on playing tetris",
   },
   { 
     id: "personal-website", 
     title: "Personal website", 
-    description: "Dive deep into financial data to make informed decisions for your next big move.",
+    description: "The very website you are on now, built with next.js + three.js",
   },
   { 
     id: "flash-flow", 
     title: "Flash Flow", 
-    description: "Compare performance across multiple peers and benchmarks at a glance.",
+    description: "Fullstack ai saas app",
   },
   { 
     id: "mobile-app-demo", 
     title: "Mobile app demo", 
-    description: "Analyze trends over time to forecast future results and mitigate risk.",
+    description: "Leanred mobile development in 3 days to make a demo app",
   },
   { 
     id: "pear-exchange", 
     title: "Pear Exchange", 
-    description: "Get insights on significant insider buys and sells that could shape market movements.",
+    description: "Hackathon projects, ai models on the blockchain pay per use, pay for stake",
   },
   { 
     id: "ai-research-agent", 
     title: "AI Research Agent", 
-    description: "Stay in the loop with timely alerts and daily summaries delivered right to your inbox.",
+    description: "Ai ressearch agent to find oppertunities",
   },
 ]
 

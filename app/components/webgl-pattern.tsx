@@ -1,10 +1,13 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import { Slider } from "@/components/ui/slider"
+import { usePatternStore } from "@/lib/store"
 
 export default function WebGLPattern() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const programRef = useRef<WebGLProgram | null>(null)
+  const { density, setDensity } = usePatternStore()
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -154,17 +157,17 @@ export default function WebGLPattern() {
 
       // Determine point density based on screen size
       const screenSize = width * height
-      let density = 1.3 // Default density increased from 2 to 4
+      let currentDensity = density // Use local variable for density calculations
 
       if (screenSize > 1920 * 1080) {
-        density = 1.3 // Lower density for larger screens (increased from 3 to 6)
+        currentDensity = Math.max(1.3, density)
       } else if (screenSize < 768 * 1024) {
-        density = 2 // Higher density for smaller screens (increased from 1 to 2)
+        currentDensity = Math.max(2, density)
       }
 
-      // Create a grid of points
-      for (let y = 0; y < height; y += density) {
-        for (let x = 0; x < width; x += density) {
+      // Create a grid of points using the density from state
+      for (let y = 0; y < height; y += currentDensity) {
+        for (let x = 0; x < width; x += currentDensity) {
           points.push(x, y)
         }
       }
@@ -248,10 +251,21 @@ export default function WebGLPattern() {
       gl.deleteShader(fragmentShader)
       gl.deleteBuffer(positionBuffer)
     }
-  }, [])
+  }, [density])
 
   return (
     <div className="fixed inset-0 -z-10 bg-black">
+      <div className="absolute top-4 left-4 w-48 bg-black/20 backdrop-blur-sm rounded-lg p-4">
+        <label className="text-xs text-white/70 block mb-2">Pattern Density</label>
+        <Slider
+          value={[density]}
+          onValueChange={([value]) => setDensity(value)}
+          min={0.5}
+          max={4}
+          step={0.1}
+          className="w-full"
+        />
+      </div>
       <canvas ref={canvasRef} className="w-full h-full" />
     </div>
   )
