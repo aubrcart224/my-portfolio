@@ -7,6 +7,7 @@ import ThreeBackground from '@/app/components/three-bg'
 import WebGLPattern from '@/app/components/webgl-pattern';
 import { FadeText } from './components/fade-text';
 import { Source_Code_Pro } from 'next/font/google';
+import MatrixText from '@/app/components/matrix-text'
 
 const sourceCodePro = Source_Code_Pro({ subsets: ['latin'] });
 
@@ -31,11 +32,11 @@ const Home = () => (
         lineHeight: '2.5rem',
         fontWeight: 500
       }}>
-        <FadeText>Every system has patterns.</FadeText>
+        <MatrixText>Every system has patterns.</MatrixText>
         <br />
-        <FadeText>Some we write, some we reveal.</FadeText>
+        <MatrixText>Some we write, some we reveal.</MatrixText>
         <br />
-        <FadeText>I'm here to find both.</FadeText>
+        <MatrixText>I'm here to find both.</MatrixText>
       </div>
     </div>
   </div>

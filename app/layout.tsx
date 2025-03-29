@@ -19,7 +19,6 @@ export default function Layout({
   return (
     <html>
       <body>
-        <WebGLPattern />
         <div className="min-h-screen w-full flex flex-col items-center justify-between p-2 text-white relative z-10">
           {/* Main content area */}
           <main className="flex-1 w-full max-w-4xl flex flex-col items-center justify-center">

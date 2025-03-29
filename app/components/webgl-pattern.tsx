@@ -149,7 +149,7 @@ export default function WebGLPattern() {
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
 
     // Generate grid of points
-    function generatePoints() {
+    function generatePoints(currentDensity: number) {
       const safeCanvas = canvas! // We know canvas is not null since we checked at effect start
       const width = safeCanvas.width / (window.devicePixelRatio || 1)
       const height = safeCanvas.height / (window.devicePixelRatio || 1)
@@ -157,17 +157,17 @@ export default function WebGLPattern() {
 
       // Determine point density based on screen size
       const screenSize = width * height
-      let currentDensity = density // Use local variable for density calculations
+      let adjustedDensity = currentDensity
 
       if (screenSize > 1920 * 1080) {
-        currentDensity = Math.max(1.3, density)
+        adjustedDensity = Math.max(1.3, currentDensity)
       } else if (screenSize < 768 * 1024) {
-        currentDensity = Math.max(2, density)
+        adjustedDensity = Math.max(2, currentDensity)
       }
 
       // Create a grid of points using the density from state
-      for (let y = 0; y < height; y += currentDensity) {
-        for (let x = 0; x < width; x += currentDensity) {
+      for (let y = 0; y < height; y += adjustedDensity) {
+        for (let x = 0; x < width; x += adjustedDensity) {
           points.push(x, y)
         }
       }
@@ -175,7 +175,7 @@ export default function WebGLPattern() {
       return new Float32Array(points)
     }
 
-    const positions = generatePoints()
+    let positions = generatePoints(density)
     gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW)
 
     // Set up blending for transparency
@@ -190,6 +190,7 @@ export default function WebGLPattern() {
     let time = 0
     let lastFrameTime = 0
     const PI = Math.PI
+    let currentDensity = density
 
     // Animation loop
     function render(now: number) {
@@ -204,6 +205,13 @@ export default function WebGLPattern() {
       // Assert gl and canvas are non-null since we checked at effect start
       const safeGl = gl!
       const safeCanvas = canvas!
+
+      // Check if density changed
+      if (currentDensity !== density) {
+        currentDensity = density
+        positions = generatePoints(currentDensity)
+        safeGl.bufferData(safeGl.ARRAY_BUFFER, positions, safeGl.STATIC_DRAW)
+      }
 
       // Clear with semi-transparent background for trail effect
       safeGl.clear(safeGl.COLOR_BUFFER_BIT)
