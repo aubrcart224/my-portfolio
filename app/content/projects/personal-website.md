@@ -1,38 +1,8 @@
-Okay so i need to write some content about this perosnal website, it think the best idea here is to get basic plots and then expand on them with gpt
-
-# Building a personal website
-
-## Project Overview
-
-This is a journey through the ins and outs of making the very website you find yourself on now, it didn't start in the shape you see it today, here's all the iteration.
-
-- old website
-  - why was it bad
-    - I used to have a website, it looked something like this, (insert image). A bland copy of a premade template, it did the job, it showed all the information any good personal website would, but it was missing any real engieering, any real personality. So i set out to make something better, a website that felt like a experince, something that was fun to go through. I wanted the user to be crurious and excited at every page rather than scrolling through like any other website.
-  - what did we want to do with the new one
-    - Three.js
-      - Whilst looking for some inperaation i stumbled into three.js portfolios and this seemed like the perfect way to really make my website feel alive. I soon after started mocking up some designs. addmitadly too abitious, maybe we can make some of them later.
-  - show some images of it
-    - some images of those ideas with expaltions
-- new website, show iteration one talk about the larger goals and coming back to a more simple design
-  - eventually i fell on something simpler, i have other things i need to do and well this website cant be a full time job. Keeping things with a clean UX and a exciting UI i landed on this.
-- show the og mock up made with shadcn
-  - show and expalin some code maybe go into the donut code talk about using shadcn stuff like that simple simple
-- talk about getting the md portion of the website working
-  - react md pages routing show off some code on this
-- talk about having the simple version of the website down
-  - and heres the result of all that work, i thought i would be done at this point and just fill in the content but i got inspired again to make it even more of a experience
-- why move away from the orgional projects cards?
-  - they were kinda boring got inspired by a more fun design
-- new projects cards talk about the animation logic and making it smooth
-  - add code here for sure
-- new bg
-  - talk about making the big one lol
-  - lots of good talking on optimization tbh i did some cool stuff there oh yeah add the density slider idiot lol i love you too
-- closing thoughts and iterations for the future
-  - whatever comes to mind
-
-# Building My Personal Website: A Journey Through Iteration and Exploration
+---
+title: Personal Website
+description: Building My Personal Website: A Journey Through Iteration and Exploration
+date: 2023-09-22
+---
 
 ## Project Overview
 
