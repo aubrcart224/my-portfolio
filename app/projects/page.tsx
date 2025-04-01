@@ -26,7 +26,7 @@ const projects = [
     description: "The very website you are on now, built with next.js + three.js",
   },
   { 
-    id: "flash-flow", 
+    id: "flashflow", 
     title: "Flash Flow", 
     description: "Fullstack ai saas app",
   },
@@ -36,12 +36,12 @@ const projects = [
     description: "Leanred mobile development in 3 days to make a demo app",
   },
   { 
-    id: "pear-exchange", 
+    id: "pear", 
     title: "Pear Exchange", 
     description: "Hackathon projects, ai models on the blockchain pay per use, pay for stake",
   },
   { 
-    id: "ai-research-agent", 
+    id: "ressearch-agent", 
     title: "AI Research Agent", 
     description: "Ai ressearch agent to find oppertunities",
   },
