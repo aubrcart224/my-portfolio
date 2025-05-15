@@ -4,6 +4,55 @@ import { useEffect, useRef } from "react"
 import { Slider } from "@/components/ui/slider"
 import { usePatternStore } from "@/lib/store"
 
+// Move these to the top of the file, outside the component
+const vertexShaderSource = `
+  attribute vec2 a_position;
+  uniform float u_time;
+  uniform vec2 u_resolution;
+  
+  // Helper functions
+  float sin_t(float v) { return sin(v); }
+  float cos_t(float v) { return cos(v); }
+  float mag(float x, float y) { return sqrt(x*x + y*y); }
+  
+  void main() {
+    // Get the input coordinates
+    float x = a_position.x;
+    float y = a_position.y;
+    
+    // Apply the mathematical formula from the original code
+    float k = x / 8.0 - 25.0;
+    float e = y / 8.0 - 25.0;
+    float d = cos_t(mag(k, e) / 3.0) * e / 5.0;
+    // Slow down the edge animation by reducing the time factor based on distance from center
+    float distanceFromCenter = mag(k, e) / 50.0;
+    float timeScale = 1.0 / (1.0 + distanceFromCenter * distanceFromCenter);
+    float q = x / 4.0 + (k / cos_t(y / 9.0)) * sin_t(d * 9.0 - u_time * timeScale) + 25.0;
+    float c = d - (u_time * timeScale) / 8.0;
+    
+    // Calculate the output position
+    float outX = q * sin_t(c) + u_resolution.x / 2.0;
+    float outY = ((q * 2.0 + x + y / 2.0 + d * 90.0) / 4.0) * cos_t(c) + u_resolution.y / 2.0;
+    
+    // Convert to clip space coordinates
+    vec2 clipSpace = vec2(
+      outX / u_resolution.x * 2.0 - 1.0,
+      outY / u_resolution.y * 2.0 - 1.0
+    );
+    
+    gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+    gl_PointSize = 1.0;
+  }
+`
+
+const fragmentShaderSource = `
+  precision mediump float;
+  
+  void main() {
+    gl_FragColor = vec4(1.0, 1.0, 1.0, 0.36);
+  }
+`
+
 export default function WebGLPattern() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const programRef = useRef<WebGLProgram | null>(null)
@@ -24,6 +73,9 @@ export default function WebGLPattern() {
       return
     }
 
+    // After the null check, assert gl is WebGLRenderingContext
+    const glContext = gl as WebGLRenderingContext
+
     // Set canvas dimensions with device pixel ratio
     const resize = () => {
       const dpr = window.devicePixelRatio || 1
@@ -37,61 +89,11 @@ export default function WebGLPattern() {
       canvas.style.height = `${window.innerHeight}px`
 
       // Update WebGL viewport
-      gl.viewport(0, 0, displayWidth, displayHeight)
+      glContext.viewport(0, 0, displayWidth, displayHeight)
     }
 
     window.addEventListener("resize", resize)
     resize()
-
-    // Vertex shader - positions the points
-    const vertexShaderSource = `
-      attribute vec2 a_position;
-      uniform float u_time;
-      uniform vec2 u_resolution;
-      
-      // Helper functions
-      float sin_t(float v) { return sin(v); }
-      float cos_t(float v) { return cos(v); }
-      float mag(float x, float y) { return sqrt(x*x + y*y); }
-      
-      void main() {
-        // Get the input coordinates
-        float x = a_position.x;
-        float y = a_position.y;
-        
-        // Apply the mathematical formula from the original code
-        float k = x / 8.0 - 25.0;
-        float e = y / 8.0 - 25.0;
-        float d = cos_t(mag(k, e) / 3.0) * e / 5.0;
-        // Slow down the edge animation by reducing the time factor based on distance from center
-        float distanceFromCenter = mag(k, e) / 50.0;
-        float timeScale = 1.0 / (1.0 + distanceFromCenter * distanceFromCenter);
-        float q = x / 4.0 + (k / cos_t(y / 9.0)) * sin_t(d * 9.0 - u_time * timeScale) + 25.0;
-        float c = d - (u_time * timeScale) / 8.0;
-        
-        // Calculate the output position
-        float outX = q * sin_t(c) + u_resolution.x / 2.0;
-        float outY = ((q * 2.0 + x + y / 2.0 + d * 90.0) / 4.0) * cos_t(c) + u_resolution.y / 2.0;
-        
-        // Convert to clip space coordinates
-        vec2 clipSpace = vec2(
-          outX / u_resolution.x * 2.0 - 1.0,
-          outY / u_resolution.y * 2.0 - 1.0
-        );
-        
-        gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
-        gl_PointSize = 1.0;
-      }
-    `
-
-    // Fragment shader - colors the points
-    const fragmentShaderSource = `
-      precision mediump float;
-      
-      void main() {
-        gl_FragColor = vec4(1.0, 1.0, 1.0, 0.36);
-      }
-    `
 
     // Create and compile shaders
     function createShader(gl: WebGLRenderingContext, type: number, source: string) {
@@ -133,20 +135,20 @@ export default function WebGLPattern() {
     }
 
     // Compile shaders and create program
-    const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource)
-    const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource)
-    const program = createProgram(gl, vertexShader, fragmentShader)
+    const vertexShader = createShader(glContext, glContext.VERTEX_SHADER, vertexShaderSource)
+    const fragmentShader = createShader(glContext, glContext.FRAGMENT_SHADER, fragmentShaderSource)
+    const program = createProgram(glContext, vertexShader, fragmentShader)
 
     programRef.current = program
 
     // Get attribute and uniform locations
-    const positionAttributeLocation = gl.getAttribLocation(program, "a_position")
-    const timeUniformLocation = gl.getUniformLocation(program, "u_time")
-    const resolutionUniformLocation = gl.getUniformLocation(program, "u_resolution")
+    const positionAttributeLocation = glContext.getAttribLocation(program, "a_position")
+    const timeUniformLocation = glContext.getUniformLocation(program, "u_time")
+    const resolutionUniformLocation = glContext.getUniformLocation(program, "u_resolution")
 
     // Create a buffer for the positions
-    const positionBuffer = gl.createBuffer()
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
+    const positionBuffer = glContext.createBuffer()
+    glContext.bindBuffer(glContext.ARRAY_BUFFER, positionBuffer)
 
     // Generate grid of points
     function generatePoints(currentDensity: number) {
@@ -176,14 +178,14 @@ export default function WebGLPattern() {
     }
 
     let positions = generatePoints(density)
-    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW)
+    glContext.bufferData(glContext.ARRAY_BUFFER, positions, glContext.STATIC_DRAW)
 
     // Set up blending for transparency
-    gl.enable(gl.BLEND)
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+    glContext.enable(glContext.BLEND)
+    glContext.blendFunc(glContext.SRC_ALPHA, glContext.ONE_MINUS_SRC_ALPHA)
 
     // Set clear color
-    gl.clearColor(6 / 255, 6 / 255, 6 / 255, 1.0)
+    glContext.clearColor(6 / 255, 6 / 255, 6 / 255, 1.0)
     
 
     // Animation variables
@@ -194,53 +196,45 @@ export default function WebGLPattern() {
 
     // Animation loop
     function render(now: number) {
-      // Convert time to seconds
       now *= 0.001
       const deltaTime = now - lastFrameTime
       lastFrameTime = now
 
-      // Update time with consistent speed regardless of frame rate
       time += (PI / 60) * (deltaTime / (1 / 60))
 
-      // Assert gl and canvas are non-null since we checked at effect start
-      const safeGl = gl!
-      const safeCanvas = canvas!
-
-      // Check if density changed
-      if (currentDensity !== density) {
-        currentDensity = density
-        positions = generatePoints(currentDensity)
-        safeGl.bufferData(safeGl.ARRAY_BUFFER, positions, safeGl.STATIC_DRAW)
-      }
+      // Cache these values to avoid repeated lookups
+      const width = canvas!.width / (window.devicePixelRatio || 1)
+      const height = canvas!.height / (window.devicePixelRatio || 1)
+      const dpr = window.devicePixelRatio || 1
 
       // Clear with semi-transparent background for trail effect
-      safeGl.clear(safeGl.COLOR_BUFFER_BIT)
+      glContext.clear(glContext.COLOR_BUFFER_BIT)
 
       // Use the program
-      safeGl.useProgram(program)
+      glContext.useProgram(program)
 
       // Set the uniforms
-      safeGl.uniform1f(timeUniformLocation, time)
-      safeGl.uniform2f(
+      glContext.uniform1f(timeUniformLocation, time)
+      glContext.uniform2f(
         resolutionUniformLocation,
-        safeCanvas.width / (window.devicePixelRatio || 1),
-        safeCanvas.height / (window.devicePixelRatio || 1),
+        width,
+        height
       )
 
       // Set up the position attribute
-      safeGl.enableVertexAttribArray(positionAttributeLocation)
-      safeGl.bindBuffer(safeGl.ARRAY_BUFFER, positionBuffer)
-      safeGl.vertexAttribPointer(
+      glContext.enableVertexAttribArray(positionAttributeLocation)
+      glContext.bindBuffer(glContext.ARRAY_BUFFER, positionBuffer)
+      glContext.vertexAttribPointer(
         positionAttributeLocation,
-        2, // 2 components per vertex
-        safeGl.FLOAT, // data type
-        false, // don't normalize
-        0, // stride (0 = auto)
-        0, // offset
+        2,
+        glContext.FLOAT,
+        false,
+        0,
+        0
       )
 
       // Draw the points
-      safeGl.drawArrays(safeGl.POINTS, 0, positions.length / 2)
+      glContext.drawArrays(glContext.POINTS, 0, positions.length / 2)
 
       // Request next frame
       requestAnimationFrame(render)
@@ -254,10 +248,10 @@ export default function WebGLPattern() {
       window.removeEventListener("resize", resize)
 
       // Clean up WebGL resources
-      gl.deleteProgram(program)
-      gl.deleteShader(vertexShader)
-      gl.deleteShader(fragmentShader)
-      gl.deleteBuffer(positionBuffer)
+      glContext.deleteProgram(program)
+      glContext.deleteShader(vertexShader)
+      glContext.deleteShader(fragmentShader)
+      glContext.deleteBuffer(positionBuffer)
     }
   }, [density])
 
