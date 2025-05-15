@@ -189,30 +189,28 @@ export default function WebGLPattern() {
     
 
     // Animation variables
+    let animationFrameId: number
+    let lastTime = 0
     let time = 0
-    let lastFrameTime = 0
-    const PI = Math.PI
-    let currentDensity = density
+    const STEP = 0.016 // Fixed time step (roughly 60 FPS)
 
     // Animation loop
     function render(now: number) {
-      now *= 0.001
-      const deltaTime = now - lastFrameTime
-      lastFrameTime = now
+      now *= 0.001 // Convert to seconds
+      const delta = now - lastTime
+      lastTime = now
 
-      time += (PI / 60) * (deltaTime / (1 / 60))
+      // Update time with fixed step
+      time += STEP
 
       // Cache these values to avoid repeated lookups
       const width = canvas!.width / (window.devicePixelRatio || 1)
       const height = canvas!.height / (window.devicePixelRatio || 1)
-      const dpr = window.devicePixelRatio || 1
 
-      // Clear with semi-transparent background for trail effect
+      // Clear and render
       glContext.clear(glContext.COLOR_BUFFER_BIT)
-
-      // Use the program
       glContext.useProgram(program)
-
+      
       // Set the uniforms
       glContext.uniform1f(timeUniformLocation, time)
       glContext.uniform2f(
@@ -236,15 +234,16 @@ export default function WebGLPattern() {
       // Draw the points
       glContext.drawArrays(glContext.POINTS, 0, positions.length / 2)
 
-      // Request next frame
-      requestAnimationFrame(render)
+      // Schedule next frame
+      animationFrameId = requestAnimationFrame(render)
     }
 
     // Start animation
-    requestAnimationFrame(render)
+    animationFrameId = requestAnimationFrame(render)
 
     // Cleanup
     return () => {
+      cancelAnimationFrame(animationFrameId)
       window.removeEventListener("resize", resize)
 
       // Clean up WebGL resources
