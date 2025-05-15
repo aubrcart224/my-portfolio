@@ -8,6 +8,8 @@ import WebGLPattern from '@/app/components/webgl-pattern';
 import { FadeText } from './components/fade-text';
 import { Source_Code_Pro } from 'next/font/google';
 import MatrixText from '@/app/components/matrix-text'
+import MatrixText2 from './components/matrix-text2' 
+
 
 const sourceCodePro = Source_Code_Pro({ subsets: ['latin'] });
 
@@ -36,7 +38,12 @@ const Home = () => (
         <br />
         <MatrixText>Some we write, some we reveal.</MatrixText>
         <br />
-        <MatrixText>I'm here to find both.</MatrixText>
+        <MatrixText>I'm here to find both.</MatrixText> 
+        {/* <MatrixText2>Every system has patterns.</MatrixText2>
+        <br />
+        <MatrixText2>Some we write, some we reveal.</MatrixText2>
+        <br />
+        <MatrixText2>I'm here to find both.</MatrixText2>*/}
       </div>
     </div>
   </div>
